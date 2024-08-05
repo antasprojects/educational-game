@@ -17,7 +17,6 @@ class User {
     }
 
     static async getUserByUsername(username) {
-        console.log(username + "model");
         const response = await db.query("SELECT * FROM users WHERE username = $1;", [username])
         console.log(response);
         if (response.rows.length != 1) {
