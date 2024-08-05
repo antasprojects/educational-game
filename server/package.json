@@ -1,7 +1,7 @@
 {
   "scripts": {
     "dev": "nodemon -L ./server/index.js",
-    "setup-db": "node ./server/db/setup.js"
+    "setup-db": "node ./db/setup.js"
   },
   "devDependencies": {
     "nodemon": "^3.1.4"
