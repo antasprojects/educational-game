@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>History Quiz App</title>
+    <link rel="stylesheet" href="styles.css">
+    <script defer src="script.js"></script>
+</head>
+<body>
+    <header>
+        <div class="logo">Overthinkers Academy</div>
+        <nav id="nav-bar" class="hidden">
+            <ul>
+                <li><a href="#" onclick="showSection('quizzes')">Quizzes</a></li>
+                <li><a href="#" onclick="showSection('results')">Results</a></li>
+                <li><a href="#" onclick="showSection('about-us')">About Us</a></li>
+                <li><a href="#" id="logout">Log Out</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <section id="welcome">
+            <h1 class="left-align">Welcome to our Academy, dear Students!</h1>
+            <br>
+            <p>Before you begin, please register or log in.</p>
+            <button onclick="showSection('register')">Register</button>
+            <button onclick="showSection('login')">Login</button>
+        </section>
+        <hr>
+        <br>
+        <section id="about-our-academy">
+            <h2 class="left-align">About Our Academy</h2>
+            <p>Overthinkers Academy is a place where you can challenge your historical knowledge through fun quizzes.</p>
+            <hr>
+            <br>
+            <h3 class="left-align">How to Use Our Website</h3>
+            <ul>
+                <li>Register or log in to access the quizzes.</li>
+                <li>Navigate to the "Quizzes" section to start a quiz.</li>
+                <li>Select your subject and choose the difficulty level.</li>
+                <li>Answer 6 questions and submit the quiz.</li>
+                <li>View your results and get feedback.</li>
+                <li>If you don't pass, you can retry the quiz or study more using the provided links.</li>
+            </ul>
+        </section>
+
+        <section id="register" class="hidden">
+            <h2>Register</h2>
+            <form id="registerForm">
+                <label for="username">Username:</label>
+                <input type="text" id="username" required>
+                <label for="email">Email:</label>
+                <input type="email" id="email" required>
+                <label for="password">Password:</label>
+                <input type="password" id="password" required>
+                <button type="submit">Register</button>
+                <p id="registerFeedback" class="feedback"></p>
+            </form>
+        </section>
+
+        <section id="login" class="hidden">
+            <h2>Login</h2>
+            <form id="loginForm">
+                <label for="loginEmail">Email:</label>
+                <input type="email" id="loginEmail" required>
+                <label for="loginPassword">Password:</label>
+                <input type="password" id="loginPassword" required>
+                <button type="submit">Login</button>
+                <p id="loginFeedback" class="feedback"></p>
+            </form>
+        </section>
+
+        <section id="quizzes" class="hidden">
+            <h2>Quizzes</h2>
+            <h3>Select Subject</h3>
+            <button id="historyBtn">History</button>
+        </section>
+
+        <section id="quiz-level" class="hidden">
+            <h2>History Quiz</h2>
+            <h3>Select Level</h3>
+            <button data-level="beginner">Beginner</button>
+            <button data-level="medium">Medium</button>
+            <button data-level="high">High</button>
+        </section>
+
+        <section id="quiz" class="hidden">
+            <h2>History Quiz</h2>
+            <div id="questions">
+                
+            </div>
+            <button id="submitQuiz">Submit Quiz</button>
+        </section>
+
+        <section id="results" class="hidden">
+            <h2>Your Results</h2>
+            <div id="resultDetails">
+                
+            </div>
+            <button id="retryQuiz">Try Again</button>
+            <a href="https://en.wikipedia.org/wiki/History" target="_blank">Study More on Wikipedia</a>
+        </section>
+
+        <section id="about-us" class="hidden">
+            <h2>About Us</h2>
+            <div class="developer">
+                <h3>Developer 1</h3>
+                <p>GitHub: <a href="#">GitHub Profile</a></p>
+                <p>Contact: developer1@example.com</p>
+            </div>
+            <div class="developer">
+                <h3>Developer 2</h3>
+                <p>GitHub: <a href="#">GitHub Profile</a></p>
+                <p>Contact: developer2@example.com</p>
+            </div>
+            <div class="developer">
+                <h3>Developer 3</h3>
+                <p>GitHub: <a href="#">GitHub Profile</a></p>
+                <p>Contact: developer3@anthony.com</p>
+            </div>
+            <div class="developer">
+                <h3>Developer 4</h3>
+                <p>GitHub: <a href="#">GitHub Profile</a></p>
+                <p>Contact: developer4@mohammed.com</p>
+            </div>
+        </section>
+    </main>
+
+    <br>
+
+    <footer>
+        <p>&copy; 2024Overthinkers. All rights reserved.</p>
+      </footer>
+
+</body>
+</html>
