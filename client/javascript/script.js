@@ -70,11 +70,7 @@ document.addEventListener("DOMContentLoaded", () => {
         document.getElementById('loginForm').addEventListener('submit', (e) => {
             e.preventDefault();
 
-            // if (loginEmail === validEmail && loginPassword === validPassword) {
-            //     window.location.href = 'quizzes.html';
-            // } else {
-            //     document.getElementById('loginFeedback').textContent = 'Invalid email or password.';
-            // }
+
         });
     }
 });

@@ -17,17 +17,15 @@ async function register(req, res) {
 async function login(req, res) {
     const data = req.body
     try {
-        console.log(data);
         const user = await User.getUserByEmail(data.email)
-        console.log("siema");
         if (!user) {throw new Error('No user with this email') }
 
         if (data.password === user.password) {
 
             const payload = {
-                email: user.email,
-                success: true
+                id: user.id
             }
+  
             const sendToken = (err, token) => {
                 if(err){ throw new Error('Error in token generation') }
                 res.status(200).json({

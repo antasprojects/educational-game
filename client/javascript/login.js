@@ -27,9 +27,10 @@ document.addEventListener('DOMContentLoaded', function() {
         console.log(response);
         
         if (response.status == 200) {
-            alert("Logged in")
             localStorage.setItem("token", data.token);
-            alert('Login successful!');
+            window.location.assign("index.html");
+
+
 
           } else {
             alert(data.error);
