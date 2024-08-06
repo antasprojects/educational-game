@@ -118,7 +118,7 @@ class Result {
 
 
         if (response.rows[0]) {
-            return new User(response.rows[0]);
+            return new Result(response.rows[0]);
         } else {
             throw new Error("Failed to update result");
         }
