@@ -98,7 +98,7 @@ class Result {
     static async create(data) {
         const { user_id, score, question_id } = data;
         if (!user_id || !score || !question_id ) {
-            throw new Error("One of the required fields missing.");
+            throw new Error("One of the required fields missing");
         }
 
 
