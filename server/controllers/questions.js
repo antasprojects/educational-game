@@ -12,7 +12,7 @@ async function index (req, res) {
 async function show (req, res) {
     try {
         const group_num = req.params.id;
-        const subject = req.query.subject;
+        const subject = (req.query.subject);
         const level = req.query.level;
         const questions = await Question.getOneBySubjectLevelGroup(subject, level, group_num);
         console.log('question' +questions);
@@ -22,4 +22,14 @@ async function show (req, res) {
         res.status(404).json({"error": err.message})
     }
 };
- module.exports = {index, show}
+
+async function create (req, res) {
+    try {
+        const data = req.body;
+        const result = await Question.create(data);
+        res.status(201).json(result);
+    } catch (err) {
+        res.status(400).json({"error": err.message})
+    }
+};
+ module.exports = {index, show, create}
