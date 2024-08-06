@@ -15,9 +15,9 @@ class Result {
         }
     }
 
-    static async showResultAssociateQuestionBank(id, group_num) {
+    static async showResultAssociateQuestionBank(id, subject, level, group_num) {
 
-        if (!id || !group_num) {
+        if (!id || !group_num || !level || !subject) {
             throw new Error("Fields missing")
         }
 
@@ -55,16 +55,24 @@ class Result {
             QuestionBank: []
         };
 
+        let toThrow = false;
+
         r.find(row => {
-            if (row.group_num === group_num) {
+            if (row.group_num === group_num && row.subject === subject && row.level === level) {
                 result.QuestionBank.push({
                     id: row.qbID,
                     subject: row.subject,
                     level: row.level,
                     group_num: row.group_num,
                 });
+            } else {
+                toThrow = true;
             }
         });
+
+        if (toThrow) {
+            throw new Error("Association miss match")
+        }
 
 
 
