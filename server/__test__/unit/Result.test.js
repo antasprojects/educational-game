@@ -227,4 +227,9 @@ describe("Result Model", () => {
         });
     });
 
+
+    describe("Association link Between Result and Question", () => {
+        
+    });
+
 });
