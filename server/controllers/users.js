@@ -1,5 +1,5 @@
 const User = require('../models/User');
-
+jwt = require("jsonwebtoken")
 // random comment
 
 async function register(req, res) {
@@ -23,11 +23,21 @@ async function login(req, res) {
         if (!user) {throw new Error('No user with this username') }
 
         if (data.password === user.password) {
+
             const payload = {
-                username: user.username,
-                success: true
+                username: user.username
             }
-            res.status(200).json(payload)
+
+            const sendToken = (err, token) => {
+                if(err){ throw new Error('Error in token generation') }
+                res.status(200).json({
+                    success: true,
+                    token: token,
+                });
+            }
+
+            jwt.sign(payload, process.env.SECRET_TOKEN, { expiresIn: 3600 }, sendToken);
+
         }
         else {
             throw new Error('Combination of password and username does not exist')
