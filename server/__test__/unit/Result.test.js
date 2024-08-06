@@ -28,7 +28,6 @@ describe("Result Model", () => {
                     user_id: 1,
                     score: 6,
                     question_id: 2,
-                    question_id: 3,
                     created_at: datenow,
                     updated_at: datenow,
                 },
@@ -45,7 +44,6 @@ describe("Result Model", () => {
                     user_id: 5,
                     score: 10,
                     question_id: 3,
-                    question_id: 2,
                     created_at: datenow,
                     updated_at: datenow,
                 },
@@ -78,8 +76,6 @@ describe("Result Model", () => {
         beforeEach(() => {
             copyResultObject = { ...resultObject };
             delete copyResultObject.id;
-            // delete copyResultObject.created_at;
-            // delete copyResultObject.updated_at;
         })
 
         it("resolves with a result on successful creation", async () => {
@@ -116,4 +112,10 @@ describe("Result Model", () => {
                 VALUES ($1, $2, $3) RETURNING *;`, [copyResultObject.user_id, copyResultObject.score, copyResultObject.question_id]);
         });
     });
+
+
+    describe("show", () => {
+        
+    });
+
 });
