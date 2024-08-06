@@ -180,27 +180,21 @@ describe("Result Model", () => {
             // Arrange
             const mockResult = {
                     ...copyResultObject,
-                    fun_fact: countryObject.fun_fact,
-                    map_image_url: countryObject.map_image_url,
-                    country_id: countryObject.country_id
+                    score: copyResultObject.score
             }
 
             // Act
             jest.spyOn(db, "query").mockResolvedValueOnce({ rows: [] });
-            const country = new Country(countryObject);
+            const result = new Result(resultObject);
 
             // Arrange
-            await expect(country.update(copyResultObject)).rejects.toThrow("Failed to update country");
-            expect(db.query).toHaveBeenCalledWith(`UPDATE country
-                                            SET name = $1,
-                                                capital = $2,
-                                                population = $3,
-                                                languages = $4,
-                                                fun_fact = $5, 
-                                                map_image_url = $6
-                                                WHERE country_id = $7 RETURNING *`, [
-                                                    mockResult.name, mockResult.capital, mockResult.population, mockResult.languages,
-                                                    mockResult.fun_fact, mockResult.map_image_url, mockResult.country_id
+            await expect(result.update(copyResultObject)).rejects.toThrow("Failed to update the result");
+            expect(db.query).toHaveBeenCalledWith(`UPDATE users
+                                            SET score = $1,
+                                                updated_at = $2
+                                            WHERE id = $3
+                                            RETURNING *`, [
+                                                    result.score, result.updated_at, result.id
                                                 ]);
         });
     });
