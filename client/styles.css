@@ -1,51 +1,45 @@
 body {
     font-family: Arial, sans-serif;
+    line-height: 1.6;
     margin: 0;
     padding: 0;
-    background-size: cover;
-    color: #333;
-}
-
-body {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
     background-image: url('Assets/study.jpg');
     background-size: cover;
-    background-position: center;
-    background-repeat: no-repeat;
     background-attachment: fixed;
-}
-
-.background-container {
-    background-image: url('Assets/study.jpg');
-    background-size: cover;
     background-position: center;
-    background-repeat: no-repeat;
 }
 
 header {
+    background-color: rgba(76, 175, 80, 0.9);
+    color: #fff;
+    padding: 1rem;
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 20px;
-    background-color: rgba(0, 128, 128, 0.8);
-    color: #fff;
 }
 
 .logo {
-    font-size: 1.5em;
+    font-size: 1.5rem;
     font-weight: bold;
-    text-align: center;
-    width: 100%;
+    width: 100px;
+    height: 100px;
+    background-image: url('Assets/logo.png');
+    background-size: contain;
+    background-repeat: no-repeat;
 }
 
 nav ul {
-    list-style: none;
-    margin: 0;
+    list-style-type: none;
     padding: 0;
     display: flex;
+    justify-content: center;
 }
 
 nav ul li {
-    margin-left: 20px;
+    margin: 0 1rem;
 }
 
 nav ul li a {
@@ -54,8 +48,20 @@ nav ul li a {
 }
 
 main {
-    padding: 20px;
-    background-color: rgba(255, 255, 255, 0.8);
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    padding: 2rem;
+    text-align: center;
+    background-color: rgba(255, 255, 255, 0.9);
+    margin: 2rem;
+    border-radius: 10px;
+}
+
+h1, h2, h3, h4 {
+    color: #4CAF50;
 }
 
 .hidden {
@@ -63,60 +69,121 @@ main {
 }
 
 button {
-    background-color: #008000;
+    background-color: #4CAF50;
     color: #fff;
-    padding: 10px 20px;
     border: none;
+    padding: 0.5rem 1rem;
     cursor: pointer;
-    margin: 10px 0;
+    margin: 0.5rem;
 }
 
 button:hover {
-    background-color: #005700;
+    background-color: #45a049;
 }
 
 form {
     display: flex;
     flex-direction: column;
+    align-items: center;
+    width: 100%;
+    max-width: 300px;
 }
 
 form label {
-    margin: 10px 0 5px;
+    margin-top: 1rem;
 }
 
 form input {
-    padding: 10px;
-    margin-bottom: 10px;
-    border: 1px solid #ccc;
+    width: 100%;
+    padding: 0.5rem;
+    margin-top: 0.5rem;
+}
+
+.feedback {
+    color: red;
+    margin-top: 1rem;
 }
 
 footer {
-    text-align: center;
-    padding: 20px;
-    background-color: rgba(0, 128, 128, 0.8);
+    background-color: rgba(76, 175, 80, 0.9);
     color: #fff;
-    position: fixed;
-    width: 100%;
-    bottom: 0;
-}
-
-h1, h2, h3 {
     text-align: center;
+    padding: 1rem;
+    width: 100%;
 }
 
-.left-align {
+#questions {
     text-align: left;
 }
 
-ul {
-    list-style-type: none;
-    padding: 0;
+.question {
+    margin-bottom: 1rem;
 }
 
-ul li {
-    margin: 5px 0;
+.content-wrapper {
+    display: flex;
+    justify-content: space-between;
+    gap: 4rem;
+    margin: 0 auto;
+    max-width: 1200px;
+    padding: 2rem;
 }
 
-section {
-    margin-bottom: 20px;
+.how-to-use {
+    flex: 1;
+    max-width: 400px;
+    text-align: left;
+    background-color: #f0f0f0;
+    padding: 2rem;
+    border-radius: 10px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.how-to-use ol {
+    padding-left: 1.5rem;
+}
+
+.team {
+    flex: 1;
+    max-width: 600px;
+}
+
+.developer-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 2rem;
+}
+
+.developer {
+    background-color: #f0f0f0;
+    padding: 1.5rem;
+    border-radius: 10px;
+    text-align: center;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.github-link {
+    display: inline-block;
+    margin-top: 0.5rem;
+    padding: 0.3rem 0.7rem;
+    background-color: #4CAF50;
+    color: white;
+    text-decoration: none;
+    border-radius: 3px;
+    transition: background-color 0.3s ease;
+}
+
+.github-link:hover {
+    background-color: #45a049;
+}
+
+@media (max-width: 768px) {
+    .content-wrapper {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .how-to-use, .team {
+        max-width: 100%;
+    }
 }

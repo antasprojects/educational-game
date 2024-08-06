@@ -1,5 +1,6 @@
 const User = require('../models/User');
 
+// random comment
 
 async function register(req, res) {
     try {

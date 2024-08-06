@@ -1,4 +1,7 @@
+console.log("hello")
+
 document.addEventListener("DOMContentLoaded", () => {
+    console.log("hello")
     function showSection(sectionId) {
         document.querySelectorAll('main > section').forEach(section => {
             section.classList.add('hidden');
@@ -8,6 +11,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     if (document.querySelector('.subject-btn')) {
         document.querySelectorAll('.subject-btn').forEach(button => {
+            console.log("button", button)
             button.addEventListener('click', () => {
                 const subject = button.getAttribute('data-subject');
                 showSection('quiz-level');
