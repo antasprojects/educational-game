@@ -11,6 +11,63 @@ class Result {
         this.group_num = result.group_num;
         this.created_at = result.created_at;
         this.updated_at = result.updated_at;
+        this.question = [
+
+        ]
+    }
+
+    static async showResutAssociateQuestionBank(id) {
+        const response = await db.query(`SELECT 
+                        bp.blog_id AS bp_blog,
+                        bp.blog_title,
+                        bp.blog_content,
+                        bp.user_id AS bp_user,
+                        bp.created_at AS bp_created_at,
+                        bp.updated_at AS bp_updated_at,
+                        c.comment_id,
+                        c.comment,
+                        c.blog_id AS c_blog_id,
+                        c.user_id AS c_user_id,
+                        c.created_at AS c_created_at,
+                        c.updated_at AS c_updated_at 
+                    FROM blog_posts AS bp
+                    LEFT JOIN comments AS c
+                    ON bp.blog_id = c.blog_id
+                    WHERE bp.blog_id = $1`, [id]);
+        
+        const r = response.rows;
+
+        if (r.length === 0) {
+            throw new Error("Blog post not found");
+        }
+
+
+
+        const blogPost = { 
+            blog_id: r[0].bp_blog, 
+            blog_title: r[0].blog_title, 
+            blog_content: r[0].blog_content, 
+            user_id: r[0].bp_user, 
+            created_at: r[0].bp_created_at.toISOString(), 
+            updated_at: r[0].bp_updated_at.toISOString(),
+            comments: []
+        };
+
+        r.forEach(row => {
+            if (row.comment_id) {
+                blogPost.comments.push({
+                    comment_id: row.comment_id,
+                    comment: row.comment,
+                    blog_id: row.c_blog_id,
+                    user_id: row.c_user_id,
+                    created_at: row.c_created_at.toISOString(),
+                    updated_at: row.c_updated_at.toISOString()
+                });
+            }
+        });
+
+        return new Blog(blogPost);
+
     }
 
     static async getAll() {
