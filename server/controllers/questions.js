@@ -12,7 +12,7 @@ async function index (req, res) {
 async function show (req, res) {
     try {
         const group_num = req.params.id;
-        const subject = req.query.subject;
+        const subject = (req.query.subject);
         const level = req.query.level;
         const questions = await Question.getOneBySubjectLevelGroup(subject, level, group_num);
         console.log('question' +questions);
