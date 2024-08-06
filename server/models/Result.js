@@ -1,5 +1,5 @@
 const db = require('../db/connect');
-const QuestionBank = require("./Questions")
+const QuestionBank = require("./Question")
 
 class Result {
 
