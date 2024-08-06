@@ -260,7 +260,7 @@ describe("Result Model", () => {
 
             jest.spyOn(db, "query").mockResolvedValueOnce({ rows: mockResult });
 
-            const result = await Result.showResultAssociateQuestionBank(2, 3);
+            const result = await Result.showResultAssociateQuestionBank(2, "History", "Intermediate", 3);
 
             expect(result).toBeInstanceOf(Result);
             expect(result.question_id).toBe(3);
@@ -280,7 +280,18 @@ describe("Result Model", () => {
         it("throws if db query returns no value", async () => {
             // Act & Arrange
             jest.spyOn(db, "query").mockResolvedValueOnce({ rows: [] });
-            await expect(Result.showResultAssociateQuestionBank(1, 7)).rejects.toThrow("Result not found");
+            await expect(Result.showResultAssociateQuestionBank(1, "Poetry", "Elite", 8)).rejects.toThrow("Result not found");
+        });
+
+        it("throws if inner association is a miss match", async () => {
+            const mockResult = [
+                testQuery
+            ];
+
+            jest.spyOn(db, "query").mockResolvedValueOnce({ rows: mockResult });
+
+            
+            await expect(Result.showResultAssociateQuestionBank(1, "Poetry", "Elite", 8)).rejects.toThrow("Association miss match");
         });
 
     });
