@@ -4,7 +4,7 @@ const cors = require('cors');
 const logger = require('./middleware/logger');
 
 const usersRouter = require('./routers/users');
-
+const resultsRouter = require("./routers/results")
 
 
 const app = express();
@@ -21,5 +21,6 @@ app.get("/", (req, res) => {
   })
 
 app.use("/users", usersRouter);
+app.use("/results", resultsRouter)
 
 module.exports = app;
