@@ -1,10 +1,6 @@
 const User = require('../models/User');
 jwt = require("jsonwebtoken")
-<<<<<<< HEAD
-=======
 
->>>>>>> origin/development
-// random comment
 
 async function register(req, res) {
     try {
@@ -29,15 +25,9 @@ async function login(req, res) {
         if (data.password === user.password) {
 
             const payload = {
-<<<<<<< HEAD
-                username: user.username
-            }
-
-=======
                 email: user.email,
                 success: true
             }
->>>>>>> origin/development
             const sendToken = (err, token) => {
                 if(err){ throw new Error('Error in token generation') }
                 res.status(200).json({
@@ -45,10 +35,6 @@ async function login(req, res) {
                     token: token,
                 });
             }
-<<<<<<< HEAD
-
-=======
->>>>>>> origin/development
             jwt.sign(payload, process.env.SECRET_TOKEN, { expiresIn: 3600 }, sendToken);
 
         }
