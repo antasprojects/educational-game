@@ -8,4 +8,6 @@ questionRouter.get("/", questionsContoller.index);
 
 questionRouter.get("/quizdata/:id", questionsContoller.show);
 
+questionRouter.post("/", questionsContoller.create)
+
 module.exports = questionRouter;

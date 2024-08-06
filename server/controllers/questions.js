@@ -22,4 +22,14 @@ async function show (req, res) {
         res.status(404).json({"error": err.message})
     }
 };
- module.exports = {index, show}
+
+async function create (req, res) {
+    try {
+        const data = req.body;
+        const result = await Question.create(data);
+        res.status(201).json(result);
+    } catch (err) {
+        res.status(400).json({"error": err.message})
+    }
+};
+ module.exports = {index, show, create}
