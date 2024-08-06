@@ -1,5 +1,5 @@
 const db = require('../db/connect');
-const QuestionBank = require("./Questions")
+const QuestionBank = require("./Question")
 
 class Result {
 
@@ -93,7 +93,7 @@ class Result {
         const response = await db.query(`INSERT INTO result (user_id, score, question_id) 
                 VALUES ($1, $2, $3) RETURNING *;`, [user_id, score, question_id]);
             
-        if (response.rows) {
+        if (response.rows.length > 0) {
             return new Result(response.rows[0]);
         }    
         throw new Error("Failed to create result");
@@ -110,17 +110,17 @@ class Result {
         this.updated_at = new Date();
 
         const response = await db.query(`UPDATE users
-                                            SET result = $1,
+                                            SET score = $1,
                                                 updated_at = $2
                                             WHERE id = $3
                                             RETURNING *`, 
-                                            [this.result, this.updated_at, this.id]);
+                                            [this.score, this.updated_at, this.id]);
 
 
         if (response.rows[0]) {
-            return new User(response.rows[0]);
+            return new Result(response.rows[0]);
         } else {
-            throw new Error("Failed to update result");
+            throw new Error("Failed to update the result");
         }
         
     }
@@ -128,7 +128,7 @@ class Result {
 
     async destroy() {
         const response = await db.query("DELETE FROM result WHERE id = $1 RETURNING *;", [this.id]);
-        return new User(response.rows[0]);
+        return new Result(response.rows[0]);
     }
 }
 

@@ -28,7 +28,6 @@ describe("Result Model", () => {
                     user_id: 1,
                     score: 6,
                     question_id: 2,
-                    question_id: 3,
                     created_at: datenow,
                     updated_at: datenow,
                 },
@@ -45,7 +44,6 @@ describe("Result Model", () => {
                     user_id: 5,
                     score: 10,
                     question_id: 3,
-                    question_id: 2,
                     created_at: datenow,
                     updated_at: datenow,
                 },
@@ -78,8 +76,6 @@ describe("Result Model", () => {
         beforeEach(() => {
             copyResultObject = { ...resultObject };
             delete copyResultObject.id;
-            // delete copyResultObject.created_at;
-            // delete copyResultObject.updated_at;
         })
 
         it("resolves with a result on successful creation", async () => {
@@ -116,4 +112,124 @@ describe("Result Model", () => {
                 VALUES ($1, $2, $3) RETURNING *;`, [copyResultObject.user_id, copyResultObject.score, copyResultObject.question_id]);
         });
     });
+
+
+    describe("show", () => {
+        it("resolves with a result on successful db query", async () => {
+            // Arrange
+            const mockResults = [
+                resultObject
+            ];
+            jest.spyOn(db, "query").mockResolvedValueOnce({ rows: mockResults });
+
+            // Act
+            const result = await Result.show(2);
+
+            // Assert
+            expect(result).toBeInstanceOf(Result);
+            expect(result.user_id).toBe(2);
+            expect(result.score).toBe(10);
+            expect(db.query).toHaveBeenCalledWith("SELECT * FROM result WHERE id = $1;", [2]);
+        });
+
+        it("should throw an Error if no result is found", async () => {
+            jest.spyOn(db, "query").mockResolvedValueOnce({ rows: [] });
+
+            await expect(Result.show).rejects.toThrow("No result found");
+            expect(db.query).toHaveBeenCalledWith("SELECT * FROM result WHERE id = $1;", [undefined]);
+        });
+    });
+
+
+
+    describe("update", () => {
+        let copyResultObject;
+        beforeEach(() => {
+            copyResultObject = { ...resultObject };
+            delete copyResultObject.score;
+
+            copyResultObject.score= 57;
+        });
+
+        it("updates a score result on successful db query", async () => {
+            // Arrange
+
+            const mockResults = [
+                { ...resultObject, score: copyResultObject.score }
+            ];
+            jest.spyOn(db, "query").mockResolvedValueOnce({ rows: mockResults });
+
+            // Act
+            const result = new Result(resultObject);
+            expect(result.score).toBe(10);
+
+            const updatedResult = await result.update(copyResultObject);
+
+            // Assert
+            expect(result).toBeInstanceOf(Result);
+            expect(result.score).toBe(57);
+
+            expect(db.query).toHaveBeenCalledTimes(1);
+            expect(updatedResult).toEqual({
+                ...resultObject,
+                score: copyResultObject.score
+            });
+        });
+
+        it("should throw an Error if db query returns unsuccessful", async () => {
+            // Arrange
+            const mockResult = {
+                    ...copyResultObject,
+                    score: copyResultObject.score
+            }
+
+            // Act
+            jest.spyOn(db, "query").mockResolvedValueOnce({ rows: [] });
+            const result = new Result(resultObject);
+
+            // Arrange
+            await expect(result.update(copyResultObject)).rejects.toThrow("Failed to update the result");
+            expect(db.query).toHaveBeenCalledWith(`UPDATE users
+                                            SET score = $1,
+                                                updated_at = $2
+                                            WHERE id = $3
+                                            RETURNING *`, [
+                                                    result.score, result.updated_at, result.id
+                                                ]);
+        });
+    });
+
+
+    describe("destroy", () => {
+        it("destroys a result on successful db query", async () => {
+            // Arrange
+            const mockResults = [ resultObject ];
+            jest.spyOn(db, "query").mockResolvedValueOnce({ rows: mockResults });
+
+            // Act
+            const result = new Result(resultObject);
+            const deletedResult = await result.destroy();
+
+            // Assert
+            expect(result).toBeInstanceOf(Result);
+            expect(result.score).toBe(10);
+            expect(db.query).toHaveBeenCalledTimes(1);
+            expect(deletedResult).toEqual({
+                ...resultObject
+            });
+        });
+
+        it("should throw an Error if db query returns unsuccessful", async () => {
+            // Act & Arrange
+            jest.spyOn(db, "query").mockRejectedValue(new Error("Something wrong with the DB"));
+            const country = new Result(resultObject);
+            await expect(country.destroy()).rejects.toThrow("Something wrong with the DB")
+        });
+    });
+
+
+    describe("Association link Between Result and Question", () => {
+        
+    });
+
 });
