@@ -252,7 +252,8 @@ describe("Result Model", () => {
             resultObject.updated_at = datenow.toISOString();
 
         });
-        it("returns result based on the group", async () => {
+
+        it("returns result based on the group_num", async () => {
             const mockResult = [
                 testQuery
             ];
@@ -267,6 +268,21 @@ describe("Result Model", () => {
             expect(result.QuestionBank[0]).toBeInstanceOf(Object)
 
         });
+        
+        it("throws if group_num or id are not provided", async () => {
+            // Do not use await here; instead, return the promise directly
+            await expect(Result.showResultAssociateQuestionBank(2)).rejects.toThrow("Fields missing");
+
+            // Alternatively, test with no arguments
+            await expect(Result.showResultAssociateQuestionBank()).rejects.toThrow("Fields missing");
+        });
+
+        it("throws if db query returns no value", async () => {
+            // Act & Arrange
+            jest.spyOn(db, "query").mockResolvedValueOnce({ rows: [] });
+            await expect(Result.showResultAssociateQuestionBank(1, 7)).rejects.toThrow("Result not found");
+        });
+
     });
 
 });
