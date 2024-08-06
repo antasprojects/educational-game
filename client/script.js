@@ -1,72 +1,91 @@
 document.addEventListener("DOMContentLoaded", () => {
-    const sections = document.querySelectorAll("section");
     const navBar = document.getElementById('nav-bar');
     const footer = document.querySelector('footer');
 
     const validEmail = 'cameliabaronescu@gmail.com';
-    const validPassword = 'password123'; 
-
-    document.getElementById('registerForm').addEventListener('submit', (e) => {
-        e.preventDefault();
-        const email = document.getElementById('email').value;
-        const password = document.getElementById('password').value;
-
-        if (email && password) {
-            showSection('quizzes');
-            navBar.classList.remove('hidden');
-            footer.classList.remove('hidden');
-            document.getElementById('registerFeedback').textContent = '';
-        } else {
-            document.getElementById('registerFeedback').textContent = 'Please fill in all fields.';
-        }
-    });
-
-    document.getElementById('loginForm').addEventListener('submit', (e) => {
-        e.preventDefault();
-        const loginEmail = document.getElementById('loginEmail').value;
-        const loginPassword = document.getElementById('loginPassword').value;
-
-        if (loginEmail === validEmail && loginPassword === validPassword) {
-            showSection('quizzes');
-            navBar.classList.remove('hidden');
-            footer.classList.remove('hidden');
-            document.getElementById('loginFeedback').textContent = '';
-        } else {
-            document.getElementById('loginFeedback').textContent = 'Invalid email or password.';
-        }
-    });
-
-    document.getElementById('logout').addEventListener('click', () => {
-        showSection('welcome');
-        navBar.classList.add('hidden');
-        footer.classList.add('hidden');
-    });
-
-    document.getElementById('historyBtn').addEventListener('click', () => {
-        showSection('quiz-level');
-    });
-
-    document.querySelectorAll('#quiz-level button').forEach(button => {
-        button.addEventListener('click', () => {
-            startQuiz(button.getAttribute('data-level'));
-            showSection('quiz');
-        });
-    });
-
-    document.getElementById('submitQuiz').addEventListener('click', () => {
-        showSection('results');
-        showResults();
-    });
-
-    document.getElementById('retryQuiz').addEventListener('click', () => {
-        showSection('quiz-level');
-    });
+    const validPassword = 'password123';
 
     function showSection(sectionId) {
-        sections.forEach(section => {
+        document.querySelectorAll('main > section').forEach(section => {
             section.classList.add('hidden');
         });
         document.getElementById(sectionId).classList.remove('hidden');
+    }
+
+    if (document.getElementById('registerBtn')) {
+        document.getElementById('registerBtn').addEventListener('click', () => {
+            showSection('register');
+        });
+    }
+
+    if (document.getElementById('loginBtn')) {
+        document.getElementById('loginBtn').addEventListener('click', () => {
+            showSection('login');
+        });
+    }
+
+    if (document.getElementById('registerForm')) {
+        document.getElementById('registerForm').addEventListener('submit', (e) => {
+            e.preventDefault();
+            const username = document.getElementById('username').value;
+            const email = document.getElementById('email').value;
+            const password = document.getElementById('password').value;
+
+            if (username && email && password) {
+                window.location.href = 'quizzes.html';
+            } else {
+                document.getElementById('registerFeedback').textContent = 'Please fill in all fields.';
+            }
+        });
+    }
+
+    if (document.getElementById('loginForm')) {
+        document.getElementById('loginForm').addEventListener('submit', (e) => {
+            e.preventDefault();
+            const loginEmail = document.getElementById('loginEmail').value;
+            const loginPassword = document.getElementById('loginPassword').value;
+
+            if (loginEmail === validEmail && loginPassword === validPassword) {
+                window.location.href = 'quizzes.html';
+            } else {
+                document.getElementById('loginFeedback').textContent = 'Invalid email or password.';
+            }
+        });
+    }
+
+    document.getElementById('logout').addEventListener('click', () => {
+        window.location.href = 'index.html';
+    });
+
+    if (document.querySelector('.subject-btn')) {
+        document.querySelectorAll('.subject-btn').forEach(button => {
+            button.addEventListener('click', () => {
+                const subject = button.getAttribute('data-subject');
+                showSection('quiz-level');
+            });
+        });
+    }
+
+    if (document.querySelector('#quiz-level button')) {
+        document.querySelectorAll('#quiz-level button').forEach(button => {
+            button.addEventListener('click', () => {
+                const level = button.getAttribute('data-level');
+                startQuiz(level);
+                showSection('quiz');
+            });
+        });
+    }
+
+    if (document.getElementById('submitQuiz')) {
+        document.getElementById('submitQuiz').addEventListener('click', () => {
+            window.location.href = 'results.html';
+        });
+    }
+
+    if (document.getElementById('retryQuiz')) {
+        document.getElementById('retryQuiz').addEventListener('click', () => {
+            window.location.href = 'quizzes.html';
+        });
     }
 
     function startQuiz(level) {
@@ -87,10 +106,14 @@ document.addEventListener("DOMContentLoaded", () => {
         }
     }
 
+    if (document.getElementById('resultDetails')) {
+        showResults();
+    }
+
     function showResults() {
         const resultsContainer = document.getElementById('resultDetails');
         resultsContainer.innerHTML = '<h2>Quiz Results</h2>';
-        const score = Math.floor(Math.random() * 7); // Random score between 0 and 6
+        const score = Math.floor(Math.random() * 7);
         resultsContainer.innerHTML += `<p>Your score: ${score} out of 6</p>`;
         
         if (score >= 4) {
