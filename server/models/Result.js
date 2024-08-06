@@ -11,27 +11,28 @@ class Result {
         this.created_at = result.created_at;
         this.updated_at = result.updated_at;
         if (result.QuestionBank) {
-            this.QuestionBank = result.QuestionBank.map(reply => new QuestionBank(reply))
+            this.QuestionBank = result.QuestionBank.filter(question => new QuestionBank(question) !== undefined);
         }
     }
 
-    static async showResultAssociateQuestionBank(id) {
+    static async showResultAssociateQuestionBank(id, group_num) {
+
         const response = await db.query(`SELECT 
                         r.id,
                         r.user_id,
                         r.score,
-                        r.question_id AS "qID",
+                        r.question_id,
                         r.created_at,
                         r.updated_at,
-                        r.question_id AS "result_question_id",
-                        qb.id AS "qb_ID",
+                        qb.id AS "qbID",
                         qb.subject,
                         qb.level,
                         qb.group_num
                     FROM result AS r
                     LEFT JOIN question_bank AS qb
-                    ON r.blog_id = qb.blog_id
-                    WHERE r.id = $1`, [id]);
+                    ON r.question_id = qb.id
+                    WHERE r.id = $1 AND
+                    qb.group_num = $2`, [id, group_num]);
         
         const r = response.rows;
 
@@ -40,22 +41,20 @@ class Result {
             throw new Error("Result not found");
         }
 
-
-
         const result = {
             id: r[0].id,
             user_id: r[0].user_id,
             score: r[0].score,
-            question_id: r[0].qID,
+            question_id: r[0].question_id,
             created_at: r[0].created_at.toISOString(),
             updated_at: r[0].updated_at.toISOString(),
             QuestionBank: []
         };
 
-        r.forEach(row => {
-            if (row.qb_id) {
+        r.find(row => {
+            if (row.group_num === group_num) {
                 result.QuestionBank.push({
-                    question_id: row.qb_ID,
+                    id: row.qbID,
                     subject: row.subject,
                     level: row.level,
                     group_num: row.group_num,
@@ -63,8 +62,9 @@ class Result {
             }
         });
 
-        return new Result(result);
 
+
+        return new Result(result);
     }
 
     static async getAll() {

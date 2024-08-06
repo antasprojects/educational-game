@@ -1,5 +1,6 @@
 const db = require("../../db/connect");
 const Result = require("../../models/Result");
+const Question = require("../../models/Question");
 
 let resultObject;
 const datenow = new Date();
@@ -12,7 +13,7 @@ describe("Result Model", () => {
             score: 10,
             question_id: 3,
             created_at: datenow,
-            updated_at: datenow,
+            updated_at: datenow
         };
         jest.clearAllMocks();
     });
@@ -229,7 +230,43 @@ describe("Result Model", () => {
 
 
     describe("Association link Between Result and Question", () => {
-        
+        let testQuery;
+        beforeEach(() => {
+
+            resultObject.QuestionBank = [
+                {
+                    id: 3,
+                    subject: "History",
+                    group_num: 3,
+                    level: "Intermediate",
+                }
+            ]
+
+            testQuery = { ...resultObject, qbID: resultObject.QuestionBank[0].id, ...resultObject.QuestionBank[0], id: resultObject.id }
+            delete testQuery.QuestionBank;
+
+            delete resultObject.created_at;
+            delete resultObject.update_at;
+
+            resultObject.created_at = datenow.toISOString();
+            resultObject.updated_at = datenow.toISOString();
+
+        });
+        it("returns result based on the group", async () => {
+            const mockResult = [
+                testQuery
+            ];
+
+            jest.spyOn(db, "query").mockResolvedValueOnce({ rows: mockResult });
+
+            const result = await Result.showResultAssociateQuestionBank(2, 3);
+
+            expect(result).toBeInstanceOf(Result);
+            expect(result.question_id).toBe(3);
+            expect(result).toEqual(resultObject)
+            expect(result.QuestionBank[0]).toBeInstanceOf(Object)
+
+        });
     });
 
 });
