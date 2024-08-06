@@ -4,6 +4,7 @@ DROP TABLE IF EXISTS users;
 
 CREATE TABLE users (
     id INT GENERATED ALWAYS AS IDENTITY,
+    username VARCHAR(25) NOT NULL UNIQUE,
     email VARCHAR(25) NOT NULL UNIQUE,
     password VARCHAR(70) NOT NULL,
     admin BOOLEAN DEFAULT FALSE,
@@ -40,15 +41,16 @@ CREATE TABLE result (
     FOREIGN KEY (question_id) REFERENCES question_bank(id)
 );
 
+
 -- ------------------------------------------------------------- SEED DATA --------------------------------------
 
-INSERT INTO users (email, password, admin)
+INSERT INTO users (username, password, email, admin)
 VALUES 
-    ('john@email.com', 'password123', FALSE),
-    ('jane@email.com', 'securepass456', TRUE),
-    ('alice@email.com', 'wonderland789', FALSE),
-    ('bob@email.com', 'builditnow', FALSE),
-    ('admin@email.com', 'adminpass', TRUE);
+    ('john_doe', 'password123', 'john@email.com', FALSE),
+    ('jane_smith', 'securepass456', 'jane@email.com', TRUE),
+    ('alice_wonder', 'wonderland789', 'alice@email.com', FALSE),
+    ('bob_builder', 'builditnow', 'bob@email.com', FALSE),
+    ('admin_user', 'adminpass', 'admin@email.com', TRUE);
 
 
 INSERT INTO question_bank (question, option_1, option_2, option_3, option_4, answer, subject, level, group_num)
