@@ -52,7 +52,7 @@ document.addEventListener("DOMContentLoaded", () => {
             const data = await response.json();
 
             if (response.status == 201) {
-                window.location.assign("quizzes.html");
+                window.location.assign("index.html");
             } else {
                 alert(data.error);
             }
@@ -70,11 +70,7 @@ document.addEventListener("DOMContentLoaded", () => {
         document.getElementById('loginForm').addEventListener('submit', (e) => {
             e.preventDefault();
 
-            // if (loginEmail === validEmail && loginPassword === validPassword) {
-            //     window.location.href = 'quizzes.html';
-            // } else {
-            //     document.getElementById('loginFeedback').textContent = 'Invalid email or password.';
-            // }
+
         });
     }
 });
