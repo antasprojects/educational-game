@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Overthinkers Academy - Register</title>
+    <link rel="stylesheet" href="styles.css">
+    <script defer src="./javascript/script.js"></script>
+    <style>
+        main {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: calc(100vh - 200px);
+        }
+        #register {
+            background-color: rgba(255, 255, 255, 0.9);
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+            width: 320px;
+            transform: perspective(1000px) rotateX(5deg);
+            transition: all 0.3s ease;
+        }
+        #register:hover {
+            transform: perspective(1000px) rotateX(0deg) translateY(-5px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.3);
+        }
+        #register h2 {
+            color: #4CAF50;
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        #registerForm {
+            display: flex;
+            flex-direction: column;
+        }
+        #registerForm label {
+            margin-bottom: 5px;
+            color: #333;
+        }
+        #registerForm input {
+            padding: 10px;
+            margin-bottom: 15px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+        #registerForm button {
+            background-color: #4CAF50;
+            color: white;
+            padding: 12px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+        #registerForm button:hover {
+            background-color: #45a049;
+        }
+        .register-options {
+            display: flex;
+            justify-content: center;
+            margin-top: 15px;
+        }
+        .register-options a {
+            color: #4CAF50;
+            text-decoration: none;
+        }
+        .register-options a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="logo"><a href="index.html">Overthinkers Academy</a></div>
+        <nav id="nav-bar">
+            <ul>
+                <li><a href="quizzes.html">Quizzes</a></li>
+                <li><a href="results.html">Results</a></li>
+                <li><a href="about-us.html">About Us</a></li>
+                <li><a href="login.html">Login</a></li>
+                <li><a href="register.html">Register</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <section id="register">
+            <h2>Register</h2>
+            <form id="registerForm">
+                <label for="registerEmail">Email:</label>
+                <input type="email" id="registerEmail" required>
+                <label for="registerPassword">Password:</label>
+                <input type="password" id="registerPassword" required>
+                <label for="confirmPassword">Confirm Password:</label>
+                <input type="password" id="confirmPassword" required>
+                <button type="submit">Register</button>
+                <p id="registerFeedback" class="feedback"></p>
+            </form>
+            <div class="register-options">
+                <a href="login.html">Already have an account? Login</a>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <p>&copy; 2024 Overthinkers. All rights reserved.</p>
+    </footer>
+</body>
+</html>
