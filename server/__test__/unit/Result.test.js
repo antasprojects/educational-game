@@ -1,6 +1,5 @@
 const db = require("../../db/connect");
 const Result = require("../../models/Result");
-const Question = require("../../models/Question");
 
 let resultObject;
 const datenow = new Date();
@@ -116,7 +115,7 @@ describe("Result Model", () => {
                 VALUES ($1, $2, $3) RETURNING *;`, [copyResultObject.user_id, copyResultObject.score, copyResultObject.question_id]);
         });
 
-        it("should throw an Error if country already exists", async () => {
+        it("should throw an Error if result already exists", async () => {
             // Arrange
             const mockResults = [ resultObject ];
             jest.spyOn(db, "query").mockResolvedValueOnce({ rows: [] });
@@ -237,8 +236,8 @@ describe("Result Model", () => {
         it("should throw an Error if db query returns unsuccessful", async () => {
             // Act & Arrange
             jest.spyOn(db, "query").mockRejectedValue(new Error("Something wrong with the DB"));
-            const country = new Result(resultObject);
-            await expect(country.destroy()).rejects.toThrow("Something wrong with the DB")
+            const result = new Result(resultObject);
+            await expect(result.destroy()).rejects.toThrow("Something wrong with the DB")
         });
     });
 
