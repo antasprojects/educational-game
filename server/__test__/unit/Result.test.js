@@ -77,7 +77,21 @@ describe("Result Model", () => {
         beforeEach(() => {
             copyResultObject = { ...resultObject };
             delete copyResultObject.id;
-        })
+        });
+
+        it("throws if crucial input keys are missing", async () => {
+            delete copyResultObject.score;
+            // Test with missing key score
+            await expect(Result.create(copyResultObject)).rejects.toThrow("One of the required fields missing");
+            delete copyResultObject.question_id;
+
+            // Alternatively, test with missing key score and question_id
+            await expect(Result.create(copyResultObject)).rejects.toThrow("One of the required fields missing");
+            delete copyResultObject.user_id;
+
+            // Alternatively, test with no arguments
+            await expect(Result.create({})).rejects.toThrow("One of the required fields missing");
+        });
 
         it("resolves with a result on successful creation", async () => {
             // Arrange
