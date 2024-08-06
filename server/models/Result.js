@@ -7,6 +7,7 @@ class Result {
         this.id = result.id;
         this.user_id = result.user_id;
         this.score = result.score;
+        this.question_id = result.question_id;
         this.created_at = result.created_at;
         this.updated_at = result.updated_at;
         if (result.QuestionBank) {
@@ -19,6 +20,7 @@ class Result {
                         r.id,
                         r.user_id,
                         r.score,
+                        r.question_id AS "qID",
                         r.created_at,
                         r.updated_at,
                         r.question_id AS "result_question_id",
@@ -44,6 +46,7 @@ class Result {
             id: r[0].id,
             user_id: r[0].user_id,
             score: r[0].score,
+            question_id: r[0].qID,
             created_at: r[0].created_at.toISOString(),
             updated_at: r[0].updated_at.toISOString(),
             QuestionBank: []
@@ -81,17 +84,17 @@ class Result {
     }
     
     static async create(data) {
-        const { user_id, result, subject, level, group_num } = data;
-        if (!user_id || !result || !subject || !level || !group_num ) {
+        const { user_id, score, question_id } = data;
+        if (!user_id || !score || !question_id ) {
             throw new Error("One of the required fields missing.");
         }
 
 
-        const response = await db.query(`INSERT INTO users (user_id, result, subject, level, group_num) 
-                VALUES ($1, $2, $3, $4, $5) RETURNING *;`, [user_id, result, subject, level, group_num]);
+        const response = await db.query(`INSERT INTO result (user_id, score, question_id) 
+                VALUES ($1, $2, $3) RETURNING *;`, [user_id, score, question_id]);
             
         if (response.rows) {
-            return new User(response.rows[0]);
+            return new Result(response.rows[0]);
         }    
         throw new Error("Failed to create result");
     }

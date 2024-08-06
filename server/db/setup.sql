@@ -5,6 +5,7 @@ DROP TABLE IF EXISTS users;
 CREATE TABLE users (
     id INT GENERATED ALWAYS AS IDENTITY,
     username VARCHAR(25) NOT NULL UNIQUE,
+    email VARCHAR(25) NOT NULL UNIQUE,
     password VARCHAR(70) NOT NULL,
     admin BOOLEAN DEFAULT FALSE,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
@@ -43,13 +44,13 @@ CREATE TABLE result (
 
 -- ------------------------------------------------------------- SEED DATA --------------------------------------
 
-INSERT INTO users (username, password, admin)
+INSERT INTO users (username, password, email, admin)
 VALUES 
-    ('john_doe', 'password123', FALSE),
-    ('jane_smith', 'securepass456', TRUE),
-    ('alice_wonder', 'wonderland789', FALSE),
-    ('bob_builder', 'builditnow', FALSE),
-    ('admin_user', 'adminpass', TRUE);
+    ('john_doe', 'password123', 'john@email.com', FALSE),
+    ('jane_smith', 'securepass456', 'jane@email.com', TRUE),
+    ('alice_wonder', 'wonderland789', 'alice@email.com', FALSE),
+    ('bob_builder', 'builditnow', 'bob@email.com', FALSE),
+    ('admin_user', 'adminpass', 'admin@email.com', TRUE);
 
 
 INSERT INTO question_bank (question, option_1, option_2, option_3, option_4, answer, subject, level, group_num)
