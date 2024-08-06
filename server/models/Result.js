@@ -1,72 +1,69 @@
 const db = require('../db/connect');
+const QuestionBank = require("./Question")
 
 class Result {
 
     constructor(result) {
         this.id = result.id;
         this.user_id = result.user_id;
-        this.result = result.result;
-        this.subject = result.subject;
-        this.level = result.level;
-        this.group_num = result.group_num;
+        this.score = result.score;
+        this.question_id = result.question_id;
         this.created_at = result.created_at;
         this.updated_at = result.updated_at;
-        this.question = [
-
-        ]
+        if (result.QuestionBank) {
+            this.QuestionBank = result.QuestionBank.map(reply => new QuestionBank(reply))
+        }
     }
 
-    static async showResutAssociateQuestionBank(id) {
+    static async showResultAssociateQuestionBank(id) {
         const response = await db.query(`SELECT 
-                        bp.blog_id AS bp_blog,
-                        bp.blog_title,
-                        bp.blog_content,
-                        bp.user_id AS bp_user,
-                        bp.created_at AS bp_created_at,
-                        bp.updated_at AS bp_updated_at,
-                        c.comment_id,
-                        c.comment,
-                        c.blog_id AS c_blog_id,
-                        c.user_id AS c_user_id,
-                        c.created_at AS c_created_at,
-                        c.updated_at AS c_updated_at 
-                    FROM blog_posts AS bp
-                    LEFT JOIN comments AS c
-                    ON bp.blog_id = c.blog_id
-                    WHERE bp.blog_id = $1`, [id]);
+                        r.id,
+                        r.user_id,
+                        r.score,
+                        r.question_id AS "qID",
+                        r.created_at,
+                        r.updated_at,
+                        r.question_id AS "result_question_id",
+                        qb.id AS "qb_ID",
+                        qb.subject,
+                        qb.level,
+                        qb.group_num
+                    FROM result AS r
+                    LEFT JOIN question_bank AS qb
+                    ON r.blog_id = qb.blog_id
+                    WHERE r.id = $1`, [id]);
         
         const r = response.rows;
 
+
         if (r.length === 0) {
-            throw new Error("Blog post not found");
+            throw new Error("Result not found");
         }
 
 
 
-        const blogPost = { 
-            blog_id: r[0].bp_blog, 
-            blog_title: r[0].blog_title, 
-            blog_content: r[0].blog_content, 
-            user_id: r[0].bp_user, 
-            created_at: r[0].bp_created_at.toISOString(), 
-            updated_at: r[0].bp_updated_at.toISOString(),
-            comments: []
+        const result = {
+            id: r[0].id,
+            user_id: r[0].user_id,
+            score: r[0].score,
+            question_id: r[0].qID,
+            created_at: r[0].created_at.toISOString(),
+            updated_at: r[0].updated_at.toISOString(),
+            QuestionBank: []
         };
 
         r.forEach(row => {
-            if (row.comment_id) {
-                blogPost.comments.push({
-                    comment_id: row.comment_id,
-                    comment: row.comment,
-                    blog_id: row.c_blog_id,
-                    user_id: row.c_user_id,
-                    created_at: row.c_created_at.toISOString(),
-                    updated_at: row.c_updated_at.toISOString()
+            if (row.qb_id) {
+                result.QuestionBank.push({
+                    question_id: row.qb_ID,
+                    subject: row.subject,
+                    level: row.level,
+                    group_num: row.group_num,
                 });
             }
         });
 
-        return new Blog(blogPost);
+        return new Result(result);
 
     }
 
@@ -87,17 +84,17 @@ class Result {
     }
     
     static async create(data) {
-        const { user_id, result, subject, level, group_num } = data;
-        if (!user_id || !result || !subject || !level || !group_num ) {
+        const { user_id, score, question_id } = data;
+        if (!user_id || !score || !question_id ) {
             throw new Error("One of the required fields missing.");
         }
 
 
-        const response = await db.query(`INSERT INTO users (user_id, result, subject, level, group_num) 
-                VALUES ($1, $2, $3, $4, $5) RETURNING *;`, [user_id, result, subject, level, group_num]);
+        const response = await db.query(`INSERT INTO result (user_id, score, question_id) 
+                VALUES ($1, $2, $3) RETURNING *;`, [user_id, score, question_id]);
             
-        if (response.rows) {
-            return new User(response.rows[0]);
+        if (response.rows.length > 0) {
+            return new Result(response.rows[0]);
         }    
         throw new Error("Failed to create result");
     }
@@ -113,17 +110,17 @@ class Result {
         this.updated_at = new Date();
 
         const response = await db.query(`UPDATE users
-                                            SET result = $1,
+                                            SET score = $1,
                                                 updated_at = $2
                                             WHERE id = $3
                                             RETURNING *`, 
-                                            [this.result, this.updated_at, this.id]);
+                                            [this.score, this.updated_at, this.id]);
 
 
         if (response.rows[0]) {
-            return new User(response.rows[0]);
+            return new Result(response.rows[0]);
         } else {
-            throw new Error("Failed to update result");
+            throw new Error("Failed to update the result");
         }
         
     }
@@ -131,7 +128,7 @@ class Result {
 
     async destroy() {
         const response = await db.query("DELETE FROM result WHERE id = $1 RETURNING *;", [this.id]);
-        return new User(response.rows[0]);
+        return new Result(response.rows[0]);
     }
 }
 

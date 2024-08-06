@@ -6,6 +6,8 @@ const questionRouter = Router();
 
 questionRouter.get("/", questionsContoller.index);
 
-questionRouter.get("/:id", questionsContoller.show);
+questionRouter.get("/quizdata/:id", questionsContoller.show);
+
+questionRouter.post("/", questionsContoller.create)
 
 module.exports = questionRouter;
