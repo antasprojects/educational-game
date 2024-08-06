@@ -1,4 +1,5 @@
 const User = require('../models/User');
+jwt = require("jsonwebtoken")
 
 // random comment
 
@@ -18,16 +19,24 @@ async function login(req, res) {
     const data = req.body
     try {
         console.log(data);
-        const user = await User.getUserByUsername(data.username)
-        console.log(user);
-        if (!user) {throw new Error('No user with this username') }
+        const user = await User.getUserByEmail(data.email)
+        console.log("siema");
+        if (!user) {throw new Error('No user with this email') }
 
         if (data.password === user.password) {
             const payload = {
-                username: user.username,
+                email: user.email,
                 success: true
             }
-            res.status(200).json(payload)
+            const sendToken = (err, token) => {
+                if(err){ throw new Error('Error in token generation') }
+                res.status(200).json({
+                    success: true,
+                    token: token,
+                });
+            }
+            jwt.sign(payload, process.env.SECRET_TOKEN, { expiresIn: 3600 }, sendToken);
+
         }
         else {
             throw new Error('Combination of password and username does not exist')
