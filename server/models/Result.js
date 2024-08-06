@@ -17,6 +17,10 @@ class Result {
 
     static async showResultAssociateQuestionBank(id, group_num) {
 
+        if (!id || !group_num) {
+            throw new Error("Fields missing")
+        }
+
         const response = await db.query(`SELECT 
                         r.id,
                         r.user_id,
