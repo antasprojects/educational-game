@@ -2,9 +2,9 @@ const db = require('../db/connect');
 
 class User {
 
-    constructor({user_id, username, password}) {
+    constructor({user_id, email, password}) {
         this.id = user_id;
-        this.username = username;
+        this.email = email;
         this.password = password;
     }
 
@@ -16,8 +16,8 @@ class User {
         return new User(response.rows[0]);
     }
 
-    static async getUserByUsername(username) {
-        const response = await db.query("SELECT * FROM users WHERE username = $1;", [username])
+    static async getUserByEmail(email) {
+        const response = await db.query("SELECT * FROM users WHERE email = $1;", [email])
         console.log(response);
         if (response.rows.length != 1) {
             throw new Error("Unable to locate user.");
@@ -27,9 +27,9 @@ class User {
 
     
     static async create(data) {
-        const { username, password} = data;
-        let response = await db.query("INSERT INTO users (username, password) VALUES ($1, $2) RETURNING * ;",
-            [username, password]);
+        const { email, password} = data;
+        let response = await db.query("INSERT INTO users (email, password) VALUES ($1, $2) RETURNING * ;",
+            [email, password]);
 
         console.log(response.rows[0]);
         const newId = response.rows[0].id;

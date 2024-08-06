@@ -1,20 +1,31 @@
-document.addEventListener('DOMContentLoaded', function() {
-    const registerForm = document.getElementById('registerForm');
+// document.addEventListener('DOMContentLoaded', function() {
 
-    registerForm.addEventListener('submit', function(e) {
-        e.preventDefault();
+//     document.getElementById("register-form").addEventListener("submit", async (e) => {
+//         e.preventDefault();
+//         console.log(e);
+//         const form = new FormData(e.target);
 
-        const name = document.getElementById('name').value;
-        const email = document.getElementById('email').value;
-        const password = document.getElementById('password').value;
+//         const options = {
+//             method: "POST",
+//             headers: {
+//                 'Accept': 'application/json',
+//                 'Content-Type': 'application/json'
+//             },
+//             body: JSON.stringify({
+//                 username: form.get(""),
+//                 password: form.get("password")
+//             })
+//         };
 
-        // Here you would typically send a request to your server to register the user
-        console.log('Registration attempt:', { name, email, password });
+//         console.log(options);
 
-        // For demonstration purposes, we'll just log a success message
-        alert('Registration successful!');
-        
-        // Clear the form
-        registerForm.reset();
-    });
-});
+//         const response = await fetch("http://localhost:3000/users/register", options);
+//         const data = await response.json();
+
+//         if (response.status == 201) {
+//             window.location.assign("login.html");
+//         } else {
+//             alert(data.error);
+//         }
+//     });
+// });

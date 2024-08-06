@@ -1,6 +1,7 @@
 const db = require("../db/connect")
 class Question{
-    constructor({ question, option_1, option_2, option_3, option_4, answer, subject, level, group_num, created_at, updated_at}) {
+    constructor({ id, question, option_1, option_2, option_3, option_4, answer, subject, level, group_num, created_at, updated_at}) {
+        this.id = id;
         this.question = question;
         this.option_1 = option_1;
         this.option_2 = option_2;
@@ -35,6 +36,19 @@ static async getOneBySubjectLevelGroup(subject, level, group_num){
             throw new Error("No Questions in that group")
         }
         return response.rows.map(c => new Question(c))
+    }
+    catch(error){
+        throw error
+    }
+}
+static async create(data){
+    try{
+        const { question, option_1, option_2, option_3, option_4, answer, subject, level, group_num } = data;
+        
+        let response = await db.query("INSERT INTO question_bank (question, option_1, option_2, option_3, option_4, answer, subject, level, group_num) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9) RETURNING *;",
+            [question, option_1, option_2, option_3, option_4, answer, subject, level, group_num]);
+        const newId = response.rows[0].id;
+        return newId;
     }
     catch(error){
         throw error
