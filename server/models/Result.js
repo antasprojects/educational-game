@@ -128,7 +128,7 @@ class Result {
 
     async destroy() {
         const response = await db.query("DELETE FROM result WHERE id = $1 RETURNING *;", [this.id]);
-        return new User(response.rows[0]);
+        return new Result(response.rows[0]);
     }
 }
 

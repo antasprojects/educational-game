@@ -199,4 +199,32 @@ describe("Result Model", () => {
         });
     });
 
+
+    describe("destroy", () => {
+        it("destroys a result on successful db query", async () => {
+            // Arrange
+            const mockResults = [ resultObject ];
+            jest.spyOn(db, "query").mockResolvedValueOnce({ rows: mockResults });
+
+            // Act
+            const result = new Result(resultObject);
+            const deletedResult = await result.destroy();
+
+            // Assert
+            expect(result).toBeInstanceOf(Result);
+            expect(result.score).toBe(10);
+            expect(db.query).toHaveBeenCalledTimes(1);
+            expect(deletedResult).toEqual({
+                ...resultObject
+            });
+        });
+
+        it("should throw an Error if db query returns unsuccessful", async () => {
+            // Act & Arrange
+            jest.spyOn(db, "query").mockRejectedValue(new Error("Something wrong with the DB"));
+            const country = new Result(resultObject);
+            await expect(country.destroy()).rejects.toThrow("Something wrong with the DB")
+        });
+    });
+
 });
