@@ -38,20 +38,20 @@ describe("Result Model", () => {
 
 
             // Act
-            const users = await Result.getAll();
+            const results = await Result.getAll();
 
             // Assert
             expect(Result).toBeDefined();
             expect(Result.getAll).toBeDefined();
             expect(db.query).toHaveBeenCalledTimes(1);
-            expect(users[2].user_id).toBe(3);
-            expect(users.every(user => user instanceof Result)).toBe(true);
+            expect(results[2].id).toBe(3);
+            expect(results.every(user => user instanceof Result)).toBe(true);
         });
 
-        it("throws an error if no users are found", async () => {
+        it("throws an error if no results are found", async () => {
             jest.spyOn(db, "query").mockResolvedValueOnce({ rows: [] });
 
-            await expect(Result.getAll()).rejects.toThrow("No users available")
+            await expect(Result.getAll()).rejects.toThrow("No results available")
         })
     });
 });
