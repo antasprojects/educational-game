@@ -93,7 +93,7 @@ class Result {
         const response = await db.query(`INSERT INTO result (user_id, score, question_id) 
                 VALUES ($1, $2, $3) RETURNING *;`, [user_id, score, question_id]);
             
-        if (response.rows) {
+        if (response.rows.length > 0) {
             return new Result(response.rows[0]);
         }    
         throw new Error("Failed to create result");
