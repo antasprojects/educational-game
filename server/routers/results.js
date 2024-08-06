@@ -5,6 +5,6 @@ const resultsController = require('../controllers/results');
 const resultsRouter = Router();
 
 resultsRouter.get("/", resultsController.index);
-resultsRouter.post("/", resultsController.login);
+resultsRouter.post("/", resultsController.create);
 
 module.exports = resultsRouter;
