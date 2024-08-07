@@ -1,5 +1,26 @@
 document.addEventListener('DOMContentLoaded', function() {
+
+    function showSection(sectionId) {
+        document.querySelectorAll('main > section').forEach(section => {
+            section.classList.add('hidden');
+        });
+        document.getElementById(sectionId).classList.remove('hidden');
+    }
+
+    if (document.getElementById('registerBtn')) {
+        document.getElementById('registerBtn').addEventListener('click', () => {
+            showSection('register');
+        });
+    }
+
+    if (document.getElementById('loginBtn')) {
+        document.getElementById('loginBtn').addEventListener('click', () => {
+            showSection('login');
+        });
+    }
+
     const loginForm = document.getElementById('loginForm');
+
 
     loginForm.addEventListener('submit', async function(e) {
         e.preventDefault();
