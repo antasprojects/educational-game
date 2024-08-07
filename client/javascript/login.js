@@ -49,7 +49,7 @@ document.addEventListener('DOMContentLoaded', function() {
         
         if (response.status == 200) {
             localStorage.setItem("token", data.token);
-            window.location.assign("index.html");
+            window.location.assign("hello.html");
 
 
 
