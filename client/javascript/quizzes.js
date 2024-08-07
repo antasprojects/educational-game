@@ -1,22 +1,4 @@
 
-document.addEventListener("DOMContentLoaded", () => {
-
-
-
-
-
-
-
-
-
-
-    
-    function showSection(sectionId) {
-        document.querySelectorAll('main > section').forEach(section => {
-            section.classList.add('hidden');
-        });
-        document.getElementById(sectionId).classList.remove('hidden');
-    }
 document.addEventListener('DOMContentLoaded', () => {
     const subjectButtons = document.querySelectorAll('.subject-btn');
     const levelButtons = document.querySelectorAll('.level-btn');
@@ -31,19 +13,24 @@ document.addEventListener('DOMContentLoaded', () => {
     let selectedLevel = '';
     let selectedQuiz = '';
 
+    function showSection(sectionId) {
+        document.querySelectorAll('main > section').forEach(section => {
+            section.classList.add('hidden');
+        });
+        document.getElementById(sectionId).classList.remove('hidden');
+    }
+
     subjectButtons.forEach(button => {
         button.addEventListener('click', () => {
             selectedSubject = button.dataset.subject;
-            quizzesSection.classList.add('hidden');
-            quizLevelSection.classList.remove('hidden');
+            showSection('quiz-level');
         });
     });
 
     levelButtons.forEach(button => {
         button.addEventListener('click', () => {
             selectedLevel = button.dataset.level;
-            quizLevelSection.classList.add('hidden');
-            quizSelectionSection.classList.remove('hidden');
+            showSection('quiz-selection');
         });
     });
 
@@ -63,8 +50,7 @@ document.addEventListener('DOMContentLoaded', () => {
     function loadQuiz(subject, level, quizNumber) {
         // Here you need to fetch the quiz data from a server
         // For this example, we'll just display a message
-        quizSelectionSection.classList.add('hidden');
-        quizSection.classList.remove('hidden');
+        showSection('quiz');
         document.getElementById('questions').innerHTML = `
             <p>Loading ${subject} quiz, level: ${level}, quiz number: ${quizNumber}</p>
             <p>Quiz questions would be displayed here.</p>
