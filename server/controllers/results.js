@@ -2,7 +2,6 @@ const Result = require("../models/Result");
 
 async function index(req, res) {
     try {
-        console.log("first LANDED")
         const results = await Result.getAll();
         res.status(200).json(results);
     } catch (error) {
@@ -24,7 +23,7 @@ async function create(req, res) {
     try {
         const data = req.body;
         const newResult = await Result.create(data);
-        res.status(201).send(newResult);
+        res.status(201).json({ data: newResult });
     } catch (error) {
         res.status(400).json({ error: error.message });
     }
