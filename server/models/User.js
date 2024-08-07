@@ -2,8 +2,8 @@ const db = require('../db/connect');
 
 class User {
 
-    constructor({user_id, email, password}) {
-        this.id = user_id;
+    constructor({id, email, password}) {
+        this.id = id;
         this.email = email;
         this.password = password;
     }
@@ -18,10 +18,11 @@ class User {
 
     static async getUserByEmail(email) {
         const response = await db.query("SELECT * FROM users WHERE email = $1;", [email])
-        console.log(response);
+        console.log(response.rows[0]);
         if (response.rows.length != 1) {
             throw new Error("Unable to locate user.");
         }
+
         return new User(response.rows[0]);
     }
 
