@@ -5,7 +5,6 @@ const logger = require('./middleware/logger');
 
 const usersRouter = require('./routers/users');
 const resultsRouter = require("./routers/results")
-
 const questionRouter = require('./routers/questions');
 
 const app = express();
@@ -18,6 +17,7 @@ app.get("/", (req, res) => {
     res.status(200).json({
       title: "Educational Quizes",
       description: "Api working page"
+      
     })
   })
 
