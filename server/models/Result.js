@@ -15,9 +15,9 @@ class Result {
         }
     }
 
-    static async showResultAssociateQuestionBank(id, subject, level, group_num, user_id) {
+    static async showResultAssociateQuestionBank(id, subject, level, group_num) {
 
-        if (!id || !group_num || !level || !subject || !user_id) {
+        if (!id || !group_num || !level || !subject) {
             throw new Error("Fields missing")
         }
 
@@ -36,8 +36,7 @@ class Result {
                     LEFT JOIN question_bank AS qb
                     ON r.question_id = qb.id
                     WHERE r.id = $1 AND
-                    qb.group_num = $2 AND
-                    r.user_id = $3`, [id, group_num, user_id]);
+                    qb.group_num = $2`, [id, group_num]);
         
         const r = response.rows;
 
