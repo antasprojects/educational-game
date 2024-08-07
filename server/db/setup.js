@@ -1,4 +1,3 @@
-require("dotenv").config();
 const fs = require("fs");
 const path = require("path");
 
@@ -16,3 +15,5 @@ db.query(sql)
     console.log("Set up complete");
   })
   .catch(err => console.log(err));
+
+///
