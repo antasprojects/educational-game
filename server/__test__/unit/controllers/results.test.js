@@ -4,12 +4,13 @@ const Result = require("../../../models/Result");
 const mockSend = jest.fn();
 const mockEnd = jest.fn();
 const mockJson = jest.fn();
+const mockSendStatus = jest.fn();
 const mockStatus = jest.fn(() => ({
     send: mockSend,
     json: mockJson,
     end: mockEnd
 }));
-const mockRes = { status: mockStatus };
+const mockRes = { status: mockStatus, sendStatus: mockSendStatus };
 let resultObject
 const datenow = new Date();
 describe("Results controller", () => {
@@ -147,7 +148,7 @@ describe("Results controller", () => {
 
 
 
-    xdescribe("update", () => {
+    describe("update", () => {
         let mockReq;
         beforeEach(() => {
             mockReq = {
@@ -161,8 +162,8 @@ describe("Results controller", () => {
         it("should update a result with status code 200", async () => {
             // Arrange
             // const goatsData = await Goat.getAll()
-            jest.spyOn(Result, "findById").mockResolvedValueOnce(new Result({ id: 1, name: "test result", age: 23 }));        
-            jest.spyOn(Result.prototype, "update").mockResolvedValueOnce({ id: 1, name: "new result", age: 24});
+            jest.spyOn(Result, "show").mockResolvedValueOnce(new Result(resultObject));        
+            jest.spyOn(Result.prototype, "update").mockResolvedValueOnce({ ...resultObject, score: 45 });
 
 
             // Act
@@ -172,31 +173,31 @@ describe("Results controller", () => {
 
             // Assert
             // get correct status code and the correct data
-            expect(Result.findById).toHaveBeenCalledTimes(1);
+            expect(Result.show).toHaveBeenCalledTimes(1);
             expect(Result.prototype.update).toHaveBeenCalledTimes(1);
             expect(mockStatus).toHaveBeenCalledWith(200);
-            expect(mockSend).toHaveBeenCalledWith({ data: { id: 1, name: "new result", age: 24 } });
+            expect(mockJson).toHaveBeenCalledWith({ data: { ...resultObject, score: 45 } });
         });
 
         it("should return an error upon failure by id", async () => {
             // Arrange
             // const goatsData = await Goat.getAll()
-            jest.spyOn(Result, "findById").mockRejectedValue(new Error("Something happened to your DB"));
+            jest.spyOn(Result, "show").mockRejectedValue(new Error("Something happened to your DB"));
 
             // Act
             await resultsController.update(mockReq, mockRes);
 
             // Assert
             // get correct status code and the correct data
-            expect(Result.findById).toHaveBeenCalledTimes(1);
+            expect(Result.show).toHaveBeenCalledTimes(1);
             expect(mockStatus).toHaveBeenCalledWith(400);
-            expect(mockSend).toHaveBeenCalledWith({ error: "Something happened to your DB" });
+            expect(mockJson).toHaveBeenCalledWith({ error: "Something happened to your DB" });
         });
 
         it("should return an error upon failure on update method", async () => {
             // Arrange
             // const goatsData = await Goat.getAll()
-            jest.spyOn(Result, "findById").mockResolvedValueOnce(new Result({ id: 1, name: "test result", age: 23 }));        
+            jest.spyOn(Result, "show").mockResolvedValueOnce(new Result(resultObject));        
             jest.spyOn(Result.prototype, "update").mockRejectedValue(new Error("Something happened to your DB"));
 
             // Act
@@ -204,16 +205,16 @@ describe("Results controller", () => {
 
             // Assert
             // get correct status code and the correct data
-            expect(Result.findById).toHaveBeenCalledTimes(1);
+            expect(Result.show).toHaveBeenCalledTimes(1);
             expect(Result.prototype.update).toHaveBeenCalledTimes(1);
             expect(mockStatus).toHaveBeenCalledWith(400);
-            expect(mockSend).toHaveBeenCalledWith({ error: "Something happened to your DB" });
+            expect(mockJson).toHaveBeenCalledWith({ error: "Something happened to your DB" });
         });
 
     });
 
 
-    xdescribe("destroy", () => {
+    describe("destroy", () => {
         let mockReq;
         beforeEach(() => {
             mockReq = {
@@ -223,7 +224,7 @@ describe("Results controller", () => {
 
         it("should destroy a result with status code 204", async () => {
             // Arrange
-            jest.spyOn(Result, "findById").mockResolvedValueOnce(new Result({ id: 5 }));        
+            jest.spyOn(Result, "show").mockResolvedValueOnce(new Result({ ...resultObject, id: 5 }));        
             jest.spyOn(Result.prototype, "destroy").mockResolvedValueOnce({});
 
 
@@ -232,30 +233,29 @@ describe("Results controller", () => {
 
             // Assert
             // get correct status code and the correct data
-            expect(Result.findById).toHaveBeenCalledTimes(1);
+            expect(Result.show).toHaveBeenCalledTimes(1);
             expect(Result.prototype.destroy).toHaveBeenCalledTimes(1);
-            expect(mockStatus).toHaveBeenCalledWith(204);
-            expect(mockEnd).toHaveBeenCalledTimes(1);
+            expect(mockSendStatus).toHaveBeenCalledWith(204);
         });
 
         it("should return an error upon failure by id", async () => {
             // Arrange
-            jest.spyOn(Result, "findById").mockRejectedValue(new Error("Something happened to your DB"));
+            jest.spyOn(Result, "show").mockRejectedValue(new Error("Something happened to your DB"));
 
             // Act
             await resultsController.destroy(mockReq, mockRes);
 
             // Assert
             // get correct status code and the correct data
-            expect(Result.findById).toHaveBeenCalledTimes(1);
+            expect(Result.show).toHaveBeenCalledTimes(1);
             expect(mockStatus).toHaveBeenCalledWith(404);
-            expect(mockSend).toHaveBeenCalledWith({ error: "Something happened to your DB" });
+            expect(mockJson).toHaveBeenCalledWith({ error: "Something happened to your DB" });
         });
 
         it("should return an error upon failure on destroy method", async () => {
             // Arrange
             // const goatsData = await Goat.getAll()
-            jest.spyOn(Result, "findById").mockResolvedValueOnce(new Result({ id: 1 }));        
+            jest.spyOn(Result, "show").mockResolvedValueOnce(new Result(resultObject));        
             jest.spyOn(Result.prototype, "destroy").mockRejectedValue(new Error("Something happened to your DB"));
 
             // Act
@@ -263,10 +263,10 @@ describe("Results controller", () => {
 
             // Assert
             // get correct status code and the correct data
-            expect(Result.findById).toHaveBeenCalledTimes(1);
+            expect(Result.show).toHaveBeenCalledTimes(1);
             expect(Result.prototype.destroy).toHaveBeenCalledTimes(1);
             expect(mockStatus).toHaveBeenCalledWith(404);
-            expect(mockSend).toHaveBeenCalledWith({ error: "Something happened to your DB" });
+            expect(mockJson).toHaveBeenCalledWith({ error: "Something happened to your DB" });
         });
 
     });
