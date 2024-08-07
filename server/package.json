@@ -4,7 +4,7 @@
     "setup-db": "node ./db/setup.js",
     "test": "jest --watchAll --verbose --detectOpenHandles --runInBand",
     "coverage": "jest --coverage",
-    "setup-test-db": "NODE_ENV=test node ./database/setup.js"
+    "setup-test-db": "NODE_ENV=test node ./db/setup.js"
   },
   "devDependencies": {
     "jest": "^29.7.0",
@@ -17,5 +17,11 @@
     "express": "^4.19.2",
     "jsonwebtoken": "^9.0.2",
     "pg": "^8.12.0"
+  },
+  "jest": {
+    "testPathIgnorePatterns": [
+      "./__tests__/integration/config.js",
+      "./__tests__/integration/resultHelper.js"
+    ]
   }
 }
