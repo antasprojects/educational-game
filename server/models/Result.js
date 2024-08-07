@@ -80,7 +80,9 @@ class Result {
     }
 
     static async getAll() {
-        const results = await db.query("SELECT * FROM result");
+        console.log("first here" )
+        const results = await db.query("SELECT * FROM result;");
+        console.log("worked pass db") // same setup still why wont the query get tested?
         if (results.rows.length === 0) {
             throw new Error("No results available");
         }

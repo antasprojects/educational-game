@@ -2,8 +2,16 @@ const Result = require("../models/Result");
 
 async function index(req, res) {
     try {
+        console.log("REEEEEEEEEE") // reaches this point
         const results = await Result.getAll();
+        console.log("GOES PASS"); // doesnt reach this point. I am doing integration testing Therefore I dont need to test Result.getAll why wont it reach this point?
         res.status(200).json({ data: results });
+
+
+        // if I do manual testing without the the model it works try commenting out the above code and uncomment this below code and see it.
+        // const results = [{ id: 1, user_id: 1, score: 100, question_id: 1 }];
+        // res.status(200).json({ data: results });
+
     } catch (error) {
         res.status(404).json({ error: error.message });
     }

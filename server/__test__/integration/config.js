@@ -17,6 +17,8 @@ const resetTestDB = async () => {
             connectionString: process.env.DB_TEST_URL
         });
 
+        console.log("DB ENV", process.env.DB_TEST_URL);
+
         // Execute the SQL file -> send the file to the db
         await db.query(resetSQL);
 
