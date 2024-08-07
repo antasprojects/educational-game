@@ -3,6 +3,7 @@ const Result = require("../../../models/Result");
 
 let resultObject;
 const datenow = new Date();
+
 xdescribe("Result Model", () => {
 
     beforeEach(() => {
