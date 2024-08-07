@@ -199,3 +199,100 @@ main > section {
 main > section > * {
     width: 100%;
 }
+
+.logo img {
+    width: 130px;
+    height: auto;
+    border-radius: 15px;
+    transition: transform 0.3s ease;
+}
+
+.logo img:hover {
+    transform: scale(1.05);
+}
+
+/* header style */
+
+header {
+    width: 100%;
+    background-color: rgb(29, 108, 29);
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1); /* Add a subtle shadow */
+}
+
+.header-content {
+    max-width: 1000px; /* Adjust this value to make it narrower */
+    margin: 0 auto;
+    padding: 1rem 2rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.header-content img {
+    max-width: 120px; /* Adjust logo size if needed */
+    height: auto;
+}
+
+.header-content h1 {
+    font-size: 1.8rem;
+    margin: 0;
+}
+
+/* nav bar styling */
+#nav-bar {
+    background-color: rgb(29, 108, 29);
+    padding: 15px 0;
+}
+
+#nav-bar ul {
+    list-style-type: none;
+    display: flex;
+    justify-content: center;
+    padding: 0;
+    margin: 0;
+}
+
+#nav-bar li {
+    margin: 0 20px;
+}
+
+#nav-bar a {
+    color: #fff;
+    text-decoration: none;
+    font-size: 20px;
+    font-weight: bold;
+    text-transform: capitalize;
+    transition: all 0.3s ease;
+    padding: 10px 15px;
+    background-color: #4caf50;
+    border-radius: 15px;
+    position: relative;
+    
+    /* 3D effect with round corners */
+    box-shadow: 
+        0 5px 0 #45a049,
+        0 10px 0 #3d8b3d,
+        0 15px 0 #357a35,
+        0 20px 0 #2d682d,
+        0 25px 20px rgba(0,0,0,0.3);
+}
+
+#nav-bar a:hover {
+    transform: translateY(-5px);
+    box-shadow: 
+        0 10px 0 #45a049,
+        0 15px 0 #3d8b3d,
+        0 20px 0 #357a35,
+        0 25px 0 #2d682d,
+        0 30px 20px rgba(0,0,0,0.3);
+}
+
+#nav-bar a:active {
+    transform: translateY(5px);
+    box-shadow: 
+        0 2px 0 #45a049,
+        0 4px 0 #3d8b3d,
+        0 6px 0 #357a35,
+        0 8px 0 #2d682d,
+        0 10px 10px rgba(0,0,0,0.3);
+}
