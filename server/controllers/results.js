@@ -3,7 +3,7 @@ const Result = require("../models/Result");
 async function index(req, res) {
     try {
         const results = await Result.getAll();
-        res.status(200).json(results);
+        res.status(200).json({ data: results });
     } catch (error) {
         res.status(404).json({ error: error.message });
     }
@@ -13,7 +13,7 @@ async function show(req, res) {
   try {
       const id = req.params.id;
       const result = await Result.show(parseInt(id));
-      res.status(200).json(result);
+      res.status(200).json({ data: result });
   } catch (error) {
       res.status(404).json({ error: error.message });
   }
@@ -35,7 +35,7 @@ async function update(req, res) {
         const data = req.body;
         const user = await Result.show(parseInt(id));
         const result = await user.update(data);
-        res.status(200).json(result);
+        res.status(200).json({ data: result });
     } catch (error) {
         res.status(400).json({ error: error.message });
     }
