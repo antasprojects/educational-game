@@ -3,7 +3,7 @@ const cors = require('cors');
 const path = require("path");
 
 const logger = require('./middleware/logger');
-const authenticator = require("./middleware/logger")
+const authenticator = require("./middleware/authenticator")
 
 const usersRouter = require('./routers/users');
 const resultsRouter = require("./routers/results")
@@ -23,10 +23,14 @@ app.get("/", (req, res) => {
       res.sendFile("../client/index.html");
   })
 
-  
+
+app.get("/hello", authenticator, (req, res) => {
+  res.status(200).json({ message: 'Authenticated' });
+})
+
 
 app.use("/users", usersRouter);
-app.use("/results", resultsRouter)
+app.use("/results", resultsRouter);
 app.use("/questions", questionRouter)
 
 module.exports = app;

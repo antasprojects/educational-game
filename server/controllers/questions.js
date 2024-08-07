@@ -15,7 +15,6 @@ async function show (req, res) {
         const subject = (req.query.subject);
         const level = req.query.level;
         const questions = await Question.getOneBySubjectLevelGroup(subject, level, group_num);
-        console.log('question' +questions);
         
         res.status(200).json(questions);
     } catch (err) {
