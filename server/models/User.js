@@ -6,6 +6,7 @@ class User {
         this.id = id;
         this.email = email;
         this.password = password;
+        this.admin = false
     }
 
     static async getUserById(id) {
