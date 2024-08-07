@@ -42,7 +42,7 @@ document.addEventListener('DOMContentLoaded', function() {
             })
         }
 
-        const response = await fetch("http://localhost:3000/users/login", options);
+        const response = await fetch("https://educational-game-api.onrender.com/users/login", options);
         const data = await response.json();
 
         console.log(response);

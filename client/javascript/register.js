@@ -45,7 +45,7 @@ document.addEventListener('DOMContentLoaded', function() {
             })
         };
 
-        const response = await fetch("http://localhost:3000/users/register", options);
+        const response = await fetch("https://educational-game-api.onrender.com/users/register", options);
         const data = await response.json();
 
         if (response.status == 201) {

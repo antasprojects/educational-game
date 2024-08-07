@@ -47,7 +47,7 @@ document.addEventListener('DOMContentLoaded', () => {
     });
     async function fetchQuizData(selectedSubject, selectedLevel, selectedQuiz) {
         try {
-            const respData = await fetch(`http://localhost:3000/questions/quizdata/${selectedQuiz}?subject=${selectedSubject}&level=${selectedLevel}`);
+            const respData = await fetch(`https://educational-game-api.onrender.com/questions/quizdata/${selectedQuiz}?subject=${selectedSubject}&level=${selectedLevel}`);
            if (respData.ok) {
                 const data = await respData.json();
                 loadQuiz(data);
