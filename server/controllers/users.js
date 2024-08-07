@@ -7,7 +7,22 @@ async function register(req, res) {
 
         const data = req.body;
         const result = await User.create(data);
-        res.status(201).send(result);
+
+        const user = await User.getUserByEmail(data.email)
+
+        const payload = {
+            id: user.id
+        }
+
+        const sendToken = (err, token) => {
+            if(err){ throw new Error('Error in token generation') }
+            res.status(201).json({
+                success: true,
+                token: token,
+            });
+        }
+        jwt.sign(payload, process.env.SECRET_TOKEN, { expiresIn: 3600 }, sendToken);
+
     } catch (err) {
       res.status(400).json({ error: err.message });
     }
