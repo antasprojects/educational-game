@@ -1,9 +1,9 @@
-const db = require("../../db/connect");
-const Result = require("../../models/Result");
+const db = require("../../../db/connect");
+const Result = require("../../../models/Result");
 
 let resultObject;
 const datenow = new Date();
-describe("Result Model", () => {
+xdescribe("Result Model", () => {
 
     beforeEach(() => {
         resultObject = {

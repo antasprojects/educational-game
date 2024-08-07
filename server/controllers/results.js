@@ -2,6 +2,7 @@ const Result = require("../models/Result");
 
 async function index(req, res) {
     try {
+        console.log("first LANDED")
         const results = await Result.getAll();
         res.status(200).json(results);
     } catch (error) {
