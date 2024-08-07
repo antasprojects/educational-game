@@ -1,5 +1,26 @@
 document.addEventListener('DOMContentLoaded', function() {
+
+    function showSection(sectionId) {
+        document.querySelectorAll('main > section').forEach(section => {
+            section.classList.add('hidden');
+        });
+        document.getElementById(sectionId).classList.remove('hidden');
+    }
+
+    if (document.getElementById('registerBtn')) {
+        document.getElementById('registerBtn').addEventListener('click', () => {
+            showSection('register');
+        });
+    }
+
+    if (document.getElementById('loginBtn')) {
+        document.getElementById('loginBtn').addEventListener('click', () => {
+            showSection('login');
+        });
+    }
+
     const loginForm = document.getElementById('loginForm');
+
 
     loginForm.addEventListener('submit', async function(e) {
         e.preventDefault();
@@ -21,15 +42,16 @@ document.addEventListener('DOMContentLoaded', function() {
             })
         }
 
-        const response = await fetch("http://localhost:3000/users/login", options);
+        const response = await fetch("https://educational-game-api.onrender.com/users/login", options);
         const data = await response.json();
 
         console.log(response);
         
         if (response.status == 200) {
-            alert("Logged in")
             localStorage.setItem("token", data.token);
-            alert('Login successful!');
+            window.location.assign("hello.html");
+
+
 
           } else {
             alert(data.error);

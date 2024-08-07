@@ -2,8 +2,16 @@ const Result = require("../models/Result");
 
 async function index(req, res) {
     try {
+        console.log("REEEEEEEEEE") // reaches this point
         const results = await Result.getAll();
-        res.status(200).json(results);
+        console.log("GOES PASS"); // doesnt reach this point. I am doing integration testing Therefore I dont need to test Result.getAll why wont it reach this point?
+        res.status(200).json({ data: results });
+
+
+        // if I do manual testing without the the model it works try commenting out the above code and uncomment this below code and see it.
+        // const results = [{ id: 1, user_id: 1, score: 100, question_id: 1 }];
+        // res.status(200).json({ data: results });
+
     } catch (error) {
         res.status(404).json({ error: error.message });
     }
@@ -13,7 +21,7 @@ async function show(req, res) {
   try {
       const id = req.params.id;
       const result = await Result.show(parseInt(id));
-      res.status(200).json(result);
+      res.status(200).json({ data: result });
   } catch (error) {
       res.status(404).json({ error: error.message });
   }
@@ -23,7 +31,7 @@ async function create(req, res) {
     try {
         const data = req.body;
         const newResult = await Result.create(data);
-        res.status(201).send(newResult);
+        res.status(201).json({ data: newResult });
     } catch (error) {
         res.status(400).json({ error: error.message });
     }
@@ -35,7 +43,7 @@ async function update(req, res) {
         const data = req.body;
         const user = await Result.show(parseInt(id));
         const result = await user.update(data);
-        res.status(200).json(result);
+        res.status(200).json({ data: result });
     } catch (error) {
         res.status(400).json({ error: error.message });
     }

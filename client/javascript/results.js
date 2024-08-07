@@ -9,8 +9,21 @@ document.addEventListener("DOMContentLoaded", () => {
         });
     }
 
-    function showResults() {
+    async function showResults() {
         const resultsContainer = document.getElementById('resultDetails');
+        // console.log("first WE ARE HERE", localStorage.getItem("token"))
+        // const options = {
+        //     method: "GET",
+        //     headers: {
+        //         "authorization": localStorage.getItem("token")
+        //     },
+        // }
+
+        // const response = await fetch("http://localhost:3000/results", options);
+        // const data = await response.json();
+
+        // console.log("firstsssss", data)
+
         resultsContainer.innerHTML = '<h2>Quiz Results</h2>';
         const score = Math.floor(Math.random() * 7);
         resultsContainer.innerHTML += `<p>Your score: ${score} out of 6</p>`;
@@ -24,7 +37,5 @@ document.addEventListener("DOMContentLoaded", () => {
         }
     }
 
-    document.getElementById('logout').addEventListener('click', () => {
-        window.location.href = 'index.html';
-    });
+
 });

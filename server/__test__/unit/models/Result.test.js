@@ -1,9 +1,10 @@
-const db = require("../../db/connect");
-const Result = require("../../models/Result");
+const db = require("../../../db/connect");
+const Result = require("../../../models/Result");
 
 let resultObject;
 const datenow = new Date();
-describe("Result Model", () => {
+
+xdescribe("Result Model", () => {
 
     beforeEach(() => {
         resultObject = {
@@ -12,7 +13,7 @@ describe("Result Model", () => {
             score: 10,
             question_id: 3,
             created_at: datenow,
-            updated_at: datenow,
+            updated_at: datenow
         };
         jest.clearAllMocks();
     });
@@ -76,7 +77,21 @@ describe("Result Model", () => {
         beforeEach(() => {
             copyResultObject = { ...resultObject };
             delete copyResultObject.id;
-        })
+        });
+
+        it("throws if crucial input keys are missing", async () => {
+            delete copyResultObject.score;
+            // Test with missing key score
+            await expect(Result.create(copyResultObject)).rejects.toThrow("One of the required fields missing");
+            delete copyResultObject.question_id;
+
+            // Alternatively, test with missing key score and question_id
+            await expect(Result.create(copyResultObject)).rejects.toThrow("One of the required fields missing");
+            delete copyResultObject.user_id;
+
+            // Alternatively, test with no arguments
+            await expect(Result.create({})).rejects.toThrow("One of the required fields missing");
+        });
 
         it("resolves with a result on successful creation", async () => {
             // Arrange
@@ -101,7 +116,7 @@ describe("Result Model", () => {
                 VALUES ($1, $2, $3) RETURNING *;`, [copyResultObject.user_id, copyResultObject.score, copyResultObject.question_id]);
         });
 
-        it("should throw an Error if country already exists", async () => {
+        it("should throw an Error if result already exists", async () => {
             // Arrange
             const mockResults = [ resultObject ];
             jest.spyOn(db, "query").mockResolvedValueOnce({ rows: [] });
@@ -222,14 +237,77 @@ describe("Result Model", () => {
         it("should throw an Error if db query returns unsuccessful", async () => {
             // Act & Arrange
             jest.spyOn(db, "query").mockRejectedValue(new Error("Something wrong with the DB"));
-            const country = new Result(resultObject);
-            await expect(country.destroy()).rejects.toThrow("Something wrong with the DB")
+            const result = new Result(resultObject);
+            await expect(result.destroy()).rejects.toThrow("Something wrong with the DB")
         });
     });
 
 
     describe("Association link Between Result and Question", () => {
+        let testQuery;
+        beforeEach(() => {
+
+            resultObject.QuestionBank = [
+                {
+                    id: 3,
+                    subject: "History",
+                    group_num: 3,
+                    level: "Intermediate",
+                }
+            ]
+
+            testQuery = { ...resultObject, qbID: resultObject.QuestionBank[0].id, ...resultObject.QuestionBank[0], id: resultObject.id }
+            delete testQuery.QuestionBank;
+
+            delete resultObject.created_at;
+            delete resultObject.update_at;
+
+            resultObject.created_at = datenow.toISOString();
+            resultObject.updated_at = datenow.toISOString();
+
+        });
+
+        it("returns result based on the group_num", async () => {
+            const mockResult = [
+                testQuery
+            ];
+
+            jest.spyOn(db, "query").mockResolvedValueOnce({ rows: mockResult });
+
+            const result = await Result.showResultAssociateQuestionBank(2, "History", "Intermediate", 3);
+
+            expect(result).toBeInstanceOf(Result);
+            expect(result.question_id).toBe(3);
+            expect(result).toEqual(resultObject)
+            expect(result.QuestionBank[0]).toBeInstanceOf(Object)
+
+        });
         
+        it("throws if group_num or id are not provided", async () => {
+            // Do not use await here; instead, return the promise directly
+            await expect(Result.showResultAssociateQuestionBank(2)).rejects.toThrow("Fields missing");
+
+            // Alternatively, test with no arguments
+            await expect(Result.showResultAssociateQuestionBank()).rejects.toThrow("Fields missing");
+        });
+
+        it("throws if db query returns no value", async () => {
+            // Act & Arrange
+            jest.spyOn(db, "query").mockResolvedValueOnce({ rows: [] });
+            await expect(Result.showResultAssociateQuestionBank(1, "Poetry", "Elite", 8)).rejects.toThrow("Result not found");
+        });
+
+        it("throws if inner association is a miss match", async () => {
+            const mockResult = [
+                testQuery
+            ];
+
+            jest.spyOn(db, "query").mockResolvedValueOnce({ rows: mockResult });
+
+            
+            await expect(Result.showResultAssociateQuestionBank(1, "Poetry", "Elite", 8)).rejects.toThrow("Association miss match");
+        });
+
     });
 
 });

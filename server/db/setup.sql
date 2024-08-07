@@ -40,35 +40,36 @@ CREATE TABLE result (
     FOREIGN KEY (question_id) REFERENCES question_bank(id)
 );
 
+
 -- ------------------------------------------------------------- SEED DATA --------------------------------------
 
-INSERT INTO users (email, password, admin)
+INSERT INTO users (password, email, admin)
 VALUES 
-    ('john@email.com', 'password123', FALSE),
-    ('jane@email.com', 'securepass456', TRUE),
-    ('alice@email.com', 'wonderland789', FALSE),
-    ('bob@email.com', 'builditnow', FALSE),
-    ('admin@email.com', 'adminpass', TRUE);
+    ('password123', 'john@email.com', FALSE),
+    ('securepass456', 'jane@email.com', TRUE),
+    ('wonderland789', 'alice@email.com', FALSE),
+    ('builditnow', 'bob@email.com', FALSE),
+    ('adminpass', 'admin@email.com', TRUE);
 
 
--- INSERT INTO question_bank (question, option_1, option_2, option_3, option_4, answer, subject, level, group_num)
--- VALUES 
---     ('Who wrote "Pride and Prejudice"?', 'Jane Austen', 'Emily Brontë', 'Charles Dickens', 'Mark Twain', 'Jane Austen', 'Literature', 'Easy', 1),
---     ('In what year did the Berlin Wall fall?', '1985', '1987', '1989', '1991', '1989', 'History', 'Medium', 2),
---     ('Who painted the Mona Lisa?', 'Vincent van Gogh', 'Leonardo da Vinci', 'Pablo Picasso', 'Claude Monet', 'Leonardo da Vinci', 'Art', 'Easy', 1),
---     ('Which Shakespeare play features the characters Rosencrantz and Guildenstern?', 'Hamlet', 'Macbeth', 'Othello', 'King Lear', 'Hamlet', 'Literature', 'Medium', 2),
---     ('What is the first name of the famous Spanish artist Picasso?', 'Juan', 'Francisco', 'Pablo', 'Luis', 'Pablo', 'Art', 'Easy', 3);
+INSERT INTO question_bank (question, option_1, option_2, option_3, option_4, answer, subject, level, group_num)
+VALUES 
+    ('Who wrote "Pride and Prejudice"?', 'Jane Austen', 'Emily Brontë', 'Charles Dickens', 'Mark Twain', 'Jane Austen', 'Literature', 'Easy', 1),
+    ('In what year did the Berlin Wall fall?', '1985', '1987', '1989', '1991', '1989', 'History', 'Medium', 2),
+    ('Who painted the Mona Lisa?', 'Vincent van Gogh', 'Leonardo da Vinci', 'Pablo Picasso', 'Claude Monet', 'Leonardo da Vinci', 'Art', 'Easy', 1),
+    ('Which Shakespeare play features the characters Rosencrantz and Guildenstern?', 'Hamlet', 'Macbeth', 'Othello', 'King Lear', 'Hamlet', 'Literature', 'Medium', 2),
+    ('What is the first name of the famous Spanish artist Picasso?', 'Juan', 'Francisco', 'Pablo', 'Luis', 'Pablo', 'Art', 'Easy', 3);
 
 
--- INSERT INTO result (user_id, score, question_id)
--- VALUES 
---     (1, 10, 1),
---     (2, 9, 2),
---     (3, 8, 3),
---     (4, 7, 4),
---     (5, 10, 5),
---     (1, 6, 2),
---     (2, 7, 3),
---     (3, 9, 1),
---     (4, 5, 5),
---     (5, 8, 4);
+INSERT INTO result (user_id, score, question_id)
+VALUES 
+    (1, 10, 1),
+    (2, 9, 2),
+    (3, 8, 3),
+    (4, 7, 4),
+    (5, 10, 5),
+    (1, 6, 2),
+    (2, 7, 3),
+    (3, 9, 1),
+    (4, 5, 5),
+    (5, 8, 4);
