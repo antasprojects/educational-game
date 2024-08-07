@@ -14,6 +14,9 @@ document.addEventListener('DOMContentLoaded', () => {
     let selectedSubject = '';
     let selectedLevel = '';
     let selectedQuiz = '';
+    let rightAnswers = []
+    let score = 0
+    
 
     function showSection(sectionId) {
         document.querySelectorAll('main > section').forEach(section => {
@@ -55,12 +58,7 @@ document.addEventListener('DOMContentLoaded', () => {
             console.log(e);
         }
     }
-    submitQuizButton.addEventListener('click', () => {
-        // Here you handle quiz submission
-        console.log('Quiz submitted');
-        // You can add code here to process the answers and show results
-    });
-
+    
     function loadQuiz(datas) {
         quizSectionDiv.innerHTML = '';
         showSection('quiz');
@@ -83,9 +81,32 @@ document.addEventListener('DOMContentLoaded', () => {
                 questionElement.appendChild(optionLabel);
                 questionElement.appendChild(document.createElement('br'));
             });
+            rightAnswers.push(data.answer)
             quizSectionDiv.appendChild(questionElement);
     })
     
 }; 
+    submitQuizButton.addEventListener('click', () => {
+    // Here you handle quiz submission
+    console.log('Quiz submitted');
+    // You can add code here to process the answers and show results
+    
+   
+    document.querySelectorAll('.question').forEach(questionDiv => {
+        const answers = {};
+        const questionId = questionDiv.querySelector('input[type="radio"]').name.split('_')[1];
+        const selectedOption = questionDiv.querySelector('input[type="radio"]:checked');
+        if (selectedOption) {
+            answers[questionId] = selectedOption.value;
+        }
+         checkAnswer(answers)  
+    });
+    function checkAnswer(answers){
+        rightAnswers.forEach(rightAnswer=> {
+            if(rightAnswer === answers[questionId]){
+                score ++
+            }
+        })
+    }
 });
-
+});
