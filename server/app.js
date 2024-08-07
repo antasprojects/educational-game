@@ -29,14 +29,8 @@ app.get("/hello", authenticator, (req, res) => {
 })
 
 
-
-
-
-
-  
-
 app.use("/users", usersRouter);
-app.use("/results", resultsRouter)
+app.use("/results", resultsRouter);
 app.use("/questions", questionRouter)
 
 module.exports = app;
