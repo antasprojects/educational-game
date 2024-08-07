@@ -258,3 +258,7 @@ footer {
     color: #fff;
     text-decoration: none;
 }
+
+#logout {
+    cursor: pointer;
+}
