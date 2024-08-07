@@ -1,9 +1,9 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
+    <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Quizzes - Overthinkers Academy</title>
+    <title>quizzes - overthinkers academy</title>
     <link rel="stylesheet" href="styles.css">
     <script defer src="./javascript/quizzes.js"></script>
 </head>
@@ -15,7 +15,9 @@
                 <li><a href="index.html">Home</a></li>
                 <li><a href="quizzes.html">Quizzes</a></li>
                 <li><a href="results.html">Results</a></li>
-                <li><a href="hello.html">Logout</a></li>
+
+                <li><a id="logout">Logout</a></li>
+
 
             </ul>
         </nav>
@@ -23,28 +25,35 @@
 
     <main>
         <section id="quizzes">
-            <h2>Select a Subject</h2>
-            <button class="subject-btn" data-subject="history">History</button>
-            <button class="subject-btn" data-subject="geography">Geography</button>
-            <button class="subject-btn" data-subject="languages">Languages</button>
+            <h2>Select a subject</h2>
+            <button class="subject-btn" data-subject="history">history</button>
+            <button class="subject-btn" data-subject="geography">geography</button>
+            <button class="subject-btn" data-subject="languages">languages</button>
         </section>
 
         <section id="quiz-level" class="hidden">
-            <h2>Select Level</h2>
-            <button data-level="beginner">Beginner</button>
-            <button data-level="medium">Medium</button>
-            <button data-level="high">High</button>
+            <h2>Select level</h2>
+            <button class="level-btn" data-level="Easy">Easy</button>
+            <button class="level-btn" data-level="Medium">Medium</button>
+            <button class="level-btn" data-level="Hard">Hard</button>
+        </section>
+
+        <section id="quiz-selection" class="hidden">
+            <h2>Select a quiz</h2>
+            <button class="quiz-btn" data-quiz="1">Quiz 1</button>
+            <button class="quiz-btn" data-quiz="2">Quiz 2</button>
+            <button class="quiz-btn" data-quiz="3">Quiz 3</button>
         </section>
 
         <section id="quiz" class="hidden">
-            <h2>Quiz</h2>
+            <h2>quiz</h2>
             <div id="questions"></div>
-            <button id="submitQuiz">Submit Quiz</button>
+            <button id="submitquiz">submit quiz</button>
         </section>
     </main>
 
     <footer>
-        <p>&copy; 2024 Overthinkers. All rights reserved.</p>
+        <p>&copy; 2024 overthinkers. all rights reserved.</p>
     </footer>
 </body>
 </html>
