@@ -4,7 +4,8 @@
     "setup-db": "node ./db/setup.js",
     "test": "jest --watchAll --verbose",
     "coverage": "jest --coverage",
-    "setup-test-db": "NODE_ENV=test node ./database/setup.js"
+    "setup-test-db": "NODE_ENV=test node ./database/setup.js",
+    "start": "node index.js"
   },
   "devDependencies": {
     "jest": "^29.7.0",
