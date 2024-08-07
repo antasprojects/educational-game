@@ -52,6 +52,7 @@ document.addEventListener("DOMContentLoaded", () => {
             const data = await response.json();
 
             if (response.status == 201) {
+                localStorage.setItem("token", data.token);
                 window.location.assign("index.html");
             } else {
                 alert(data.error);
