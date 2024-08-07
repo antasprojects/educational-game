@@ -1,0 +1,115 @@
+.content-wrapper {
+    display: flex;
+    justify-content: space-between;
+    gap: 4rem;
+    margin: 0 auto;
+    max-width: 1400px;
+    padding: 2rem;
+}
+
+.how-to-use, .developer {
+    flex: 1;
+    max-width: 400px;
+    text-align: left;
+    background-color: #f0f0f0;
+    padding: 2rem;
+    border-radius: 10px;
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease;
+}
+
+.how-to-use:hover, .developer:hover {
+    transform: translateY(-5px);
+}
+
+.how-to-use ol {
+    padding-left: 1.5rem;
+}
+
+.team {
+    flex: 2;
+    max-width: 800px;
+}
+
+.developer-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 2rem;
+}
+
+.developer {
+    background-color: #000;
+    color: #fff;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.developer:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 12px 24px rgba(0, 0, 0, 0.2);
+}
+
+.developer h3 {
+    color: #fff;
+    transition: color 0.3s ease;
+}
+
+.developer:hover h3 {
+    color: #4CAF50;
+}
+
+.github-link {
+    display: inline-block;
+    margin-top: 0.5rem;
+    padding: 0.5rem 1rem;
+    background-color: #4CAF50;
+    color: white;
+    text-decoration: none;
+    border-radius: 5px;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    transform: translateZ(0);
+}
+
+.github-link:hover {
+    background-color: #45a049;
+    transform: translateY(-2px) translateZ(5px);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
+}
+
+/* arrange our name cards 2 on the top and 2 at the buttom in the our team Div */
+.developer-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 2rem;
+}
+
+.developer {
+    background-color: #000;
+    color: #fff;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.developer:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 12px 24px rgba(0, 0, 0, 0.2);
+}
+
+.developer h3 {
+    color: #fff;
+    transition: color 0.3s ease;
+}
+
+.developer:hover h3 {
+    color: #4CAF50;
+}
+
+/* move our team big container to the right */
+.team {
+    flex: 2;
+    max-width: 800px;
+    align-self: flex-end;
+    margin-left: 35%;
+    margin-bottom: 20%;
+}
+
+
