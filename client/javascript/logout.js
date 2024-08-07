@@ -1,5 +1,5 @@
 document.getElementById('logout').addEventListener('click', () => {
     localStorage.removeItem('token');
-    window.location.assign('./hello.html')
+    window.location.assign('./index.html')
 })
 
