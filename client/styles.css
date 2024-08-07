@@ -259,6 +259,9 @@ footer {
     text-decoration: none;
 }
 
+#logout {
+    cursor: pointer;
+}
 main section {
     width: 60%;
     max-width: 400px;
