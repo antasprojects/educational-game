@@ -6,7 +6,7 @@ body {
     display: flex;
     flex-direction: column;
     min-height: 100vh;
-
+    background-image: url('Assets/study.jpg');
     background-size: cover;
     background-attachment: fixed;
     background-position: center;
@@ -15,7 +15,7 @@ body {
 header {
     background-color: rgba(76, 175, 80, 0.9);
     color: #fff;
-    padding: 2px;
+    padding: 1rem;
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -26,6 +26,7 @@ header {
     font-weight: bold;
     width: 100px;
     height: 100px;
+    background-image: url('Assets/logo.png');
     background-size: contain;
     background-repeat: no-repeat;
 }
@@ -285,7 +286,7 @@ main section:hover {
 }
 
 main section h2 {
-    color: #333; 
+    color: #FFEB3B; /* Yellow color for headings */
     font-size: 1.4em;
     margin-bottom: 20px;
     text-align: center;
@@ -372,319 +373,4 @@ main > section button:hover {
     transform: translateY(-2px);
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
 }
-/* background image styling */
 
-body {
-    font-family: Arial, sans-serif;
-    line-height: 1.6;
-    margin: 0;
-    padding: 0;
-    display: flex;
-    flex-direction: column;
-    min-height: 100vh;
-    background: url('/educational-game/client/Assets/time.jpg') no-repeat center center fixed;
-    background-size: cover;
-    color: white;
-}
-
-/* register form */
-    #registerForm button {
-        background-color: #4CAF50;
-        color: white;
-        padding: 12px;
-        border: none;
-        border-radius: 5px;
-        cursor: pointer;
-        transition: background-color 0.3s ease;
-    }
-
-    #registerForm button:hover {
-        background-color: green;
-    }
-    .register-options {
-        display: flex;
-        justify-content: center;
-        margin-top: 15px;
-    }
-    .register-options a {
-        color: #4CAF50;
-        text-decoration: none;
-    }
-    .register-options a:hover {
-        text-decoration: underline;
-    }
-  
-  main > section > * {
-    width: 90%; /* Increased from 80% */
-    max-width: 1000px; /* Increased from 800px */
-    margin: 20px auto; /* Reduced top margin from 30px to 20px */
-    padding: 20px;
-    background: linear-gradient(145deg, #4CAF50, #8BC34A);
-    border-radius: 15px;
-    box-shadow: 
-        5px 5px 10px rgba(0, 0, 0, 0.3),
-        inset -5px -5px 10px rgba(0, 0, 0, 0.1),
-        inset 5px 5px 10px rgba(255, 255, 255, 0.1);
-    transform: perspective(1000px) rotateX(5deg) rotateY(-5deg);
-    transition: all 0.3s ease;
-}
-
-body {
-    padding-top: 0;
-}
-
-header {
-    padding: 0;
-}
-
-main {
-    padding-top: 0.5rem;
-}
-
-main > section > * {
-    margin: 5px auto;
-
-}
-
-/* login form styling */
-main {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    min-height: calc(100vh - 200px);
-}
-#login {
-    background-color: rgba(255, 255, 255, 0.9);
-    padding: 30px;
-    border-radius: 15px;
-    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
-    width: 320px;
-    transform: perspective(1000px) rotateX(5deg);
-    transition: all 0.3s ease;
-}
-#login:hover {
-    transform: perspective(1000px) rotateX(0deg) translateY(-5px);
-    box-shadow: 0 15px 30px rgba(0, 0, 0, 0.3);
-}
-#login h2 {
-    color:#333;
-    text-align: center;
-    margin-bottom: 20px;
-}
-#loginForm {
-    display: flex;
-    flex-direction: column;
-}
-#loginForm label {
-    margin-bottom: 5px;
-    color: #333;
-}
-#loginForm input {
-    padding: 10px;
-    margin-bottom: 15px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-}
-#loginForm button {
-    background-color: #4CAF50;
-    color: white;
-    padding: 12px;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
-}
-#loginForm button:hover {
-    background-color: green;
-}
-.login-options {
-    display: flex;
-    justify-content: space-between;
-    margin-top: 15px;
-}
-.login-options a {
-    color: #4CAF50;
-    text-decoration: none;
-}
-.login-options a:hover {
-    text-decoration: underline;
-}
-
-/* register styling */
-
-#registerForm button {
-    background-color: #4CAF50;
-    color: white;
-    padding: 12px;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
-}
-#registerForm button:hover {
-    background-color: green;
-}
-.register-options {
-    display: flex;
-    justify-content: center;
-    margin-top: 15px;
-}
-.register-options a {
-    color: #4CAF50;
-    text-decoration: none;
-}
-.register-options a:hover {
-    text-decoration: underline;
-}
- /*hello page styling */
- h1 {
-    color: white;
-}
-
-main > section > * {
-    width: 80%;
-    max-width: 800px;
-    margin: 30px auto;
-    padding: 30px;
-    background: linear-gradient(145deg,rgb(49, 18, 18),rgb(31, 119, 31),rgb(49, 18, 18));
-    border-radius: 20px;
-    box-shadow: 
-        8px 8px 20px rgba(0, 0, 0, 0.4),
-        inset -8px -8px 20px rgba(0, 0, 0, 0.2),
-        inset 8px 8px 20px rgba(255, 255, 255, 0.1);
-    transform: perspective(1000px) rotateX(3deg) rotateY(-3deg);
-    transition: all 0.4s ease;
-}
-
-main > section > *:hover {
-    transform: perspective(1000px) rotateX(0deg) rotateY(0deg);
-    box-shadow: 
-        12px 12px 25px rgba(0, 0, 0, 0.5),
-        inset -12px -12px 25px rgba(0, 0, 0, 0.2),
-        inset 12px 12px 25px rgba(255, 255, 255, 0.1);
-}
-
-main > section h1 {
-    color:white;
-    font-size: 2em;
-    margin-bottom: 30px;
-    text-align: center;
-    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
-    letter-spacing: 2px;
-}
-
-main > section p {
-    color: #FFFFFF;
-    font-size: 1.2em;
-    line-height: 1.6;
-    text-align: justify;
-    margin-bottom: 20px;
-    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.3);
-}
-
-main {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    min-height: calc(100vh - 200px);
-    padding: 50px 20px;
-}
-
-.main-section h1,
-.main-section p {
-    box-shadow: none;
-}
-
-.main-section h1,
-.main-section p {
-    font-size: 1.2em; /* Increase font size by 20% */
-    text-shadow: 
-        1px 1px 0 #ddd,
-        2px 2px 0 #ccc,
-        3px 3px 0 #bbb,
-        4px 4px 0 #aaa,
-        5px 5px 0 #999,
-        6px 6px 5px rgba(0,0,0,0.5);
-    margin-bottom: 20px; /* Add some space below each element */
-}
-
-.main-section h1 {
-    font-size: 2em; /* Make h1 even bigger */
-}
-
-/* Increase the size of divs in the main section */
-.main-section > div {
-    padding: 30px;
-    margin: 20px 0;
-    border-radius: 10px;
-    box-shadow: 0 5px 15px rgba(0,0,0,0.1);
-}
-
-/*quizzes html style */
-main > section > * {
-    width: 90%;
-    max-width: 1000px;
-    margin: 30px auto;
-    padding: 40px;
-}
-
-main > section h2 {
-    font-size: 1.7em;
-    margin-bottom: 30px;
-    color: white;
-}
-
-main > section button {
-    width: 90%;
-    padding: 15px;
-    font-size: 1.2em;
-    margin: 20px auto;
-    color: white;
-}
-
-/*results html style*/
-main > section > * {
-    width: 70%;
-    max-width: 800px;
-    margin: 20px auto;
-    padding: 25px;
-}
-
-#quizResults {
-    font-size: 1.1em;
-    line-height: 1.4;
-}
-
-#quizResults h2 {
-    font-size: 1.8em;
-    margin-bottom: 15px;
-}
-
-#quizResults p {
-    margin-bottom: 10px;
-}
-
-#quizResults button {
-    width: 60%;
-    padding: 12px;
-    font-size: 1em;
-    margin: 15px auto;
-}
-
-/* header and footer green color change */
-header {
-    background-color: rgba(31, 119, 31, 0.9);
-    color: #fff;
-    padding: 2px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-}
-
-footer {
-    background-color: rgba(31, 119, 31, 0.9);
-    color: #fff;
-    text-align: center;
-    padding: 1rem;
-    width: 100%;
-}
