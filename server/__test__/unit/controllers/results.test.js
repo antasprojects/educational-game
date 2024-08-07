@@ -13,6 +13,7 @@ const mockStatus = jest.fn(() => ({
 const mockRes = { status: mockStatus, sendStatus: mockSendStatus };
 let resultObject
 const datenow = new Date();
+
 describe("Results controller", () => {
     beforeEach(() => {
         resultObject = {
@@ -269,6 +270,52 @@ describe("Results controller", () => {
             expect(mockJson).toHaveBeenCalledWith({ error: "Something happened to your DB" });
         });
 
+    });
+
+    describe("showGroupListing", () => {
+        let mockReq
+        beforeEach(() => {
+            mockReq = {
+                params: {
+                  id: '123', // Example ID
+                },
+                query: {
+                  level: "Intermediate",
+                  subject: "Poetry",
+                  user_id: 3,
+                  group_num: 2,
+                },
+              };
+        });
+
+        it("should return a grouped result with status code 200", async () => {
+            // Arrange
+            // const goatsData = await Goat.getAll()
+            jest.spyOn(Result, "showResultAssociateQuestionBank").mockResolvedValueOnce({ ...resultObject, subject: "Poetry", level: "Intermediate", group_num: 2 });
+
+            // Act
+            await resultsController.showGroupListing(mockReq, mockRes);
+            // Assert
+            // get correct status code and the correct data
+            expect(Result.showResultAssociateQuestionBank).toHaveBeenCalledTimes(1);
+            expect(mockStatus).toHaveBeenCalledWith(200);
+            expect(mockJson).toHaveBeenCalledWith({ data: { ...resultObject, subject: "Poetry", level: "Intermediate", group_num: 2 } });
+        });
+
+        it("should return an error upon failure", async () => {
+            // Arrange
+            // const goatsData = await Goat.getAll()
+            jest.spyOn(Result, "showResultAssociateQuestionBank").mockRejectedValue(new Error("Something happened to your DB"));
+
+            // Act
+            await resultsController.showGroupListing(mockReq, mockRes);
+
+            // Assert
+            // get correct status code and the correct data
+            expect(Result.showResultAssociateQuestionBank).toHaveBeenCalledTimes(1);
+            expect(mockStatus).toHaveBeenCalledWith(404);
+            expect(mockJson).toHaveBeenCalledWith({ error: "Something happened to your DB" });
+        });
     });
 
 });
