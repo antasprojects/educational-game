@@ -412,3 +412,7 @@ label {
     color: #5a220c;
   }
 
+
+#logout:hover {
+    cursor: pointer;
+}
