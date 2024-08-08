@@ -72,7 +72,7 @@ body {
     display: flex;
     flex-direction: column;
     min-height: 100vh;
-    background: url('/educational-game/client/Assets/time.jpg') no-repeat center center fixed;
+    background: url('./Assets/time.jpg') no-repeat center center fixed;
     background-size: cover;
     color: white;
     padding-bottom: 30px;
@@ -349,7 +349,7 @@ footer {
     bottom: 0;
     left: 0;
     width: 100%;
-    background-color: #5a220c;
+    background-color: rgba(49, 18, 18, 0.8);
     text-align: center;
     padding: 3px 0;
 }
@@ -412,3 +412,7 @@ label {
     color: #5a220c;
   }
 
+
+#logout:hover {
+    cursor: pointer;
+}
