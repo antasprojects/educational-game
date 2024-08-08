@@ -71,13 +71,21 @@ describe('User model', () => {
 
     describe("create", () => {
         it('resolves with successful creation', async () => {
-        
-            const user = await User.create({email: 'antek@email.com', password: "xd1234"})
+            const mockInsertResponse = { rows: [{ id: 43, email: 'antek@email.com', password: 'xd1234', admin: false }] };
+            const mockGetUserResponse = { rows: [{ id: 43, email: 'antek@email.com', password: 'xd1234', admin: false }] };
+    
+            jest.spyOn(db, 'query')
+                .mockResolvedValueOnce(mockInsertResponse)
+                .mockResolvedValueOnce(mockGetUserResponse)
+    
+            const user = await User.create({ email: 'antek@email.com', password: "xd1234" });
             console.log(user);
-
-            expect(country instanceof Country).toBe(true)
-
-        })
-    })
+            expect(user instanceof User).toBe(true);
+            expect(user.id).toBe(43);
+            expect(user.email).toBe('antek@email.com');
+            expect(user.password).toBe('xd1234');
+            expect(user.admin).toBe(false);
+        });
+    });
 
 })
