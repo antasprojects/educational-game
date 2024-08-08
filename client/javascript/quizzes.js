@@ -14,8 +14,11 @@ document.addEventListener('DOMContentLoaded', () => {
     let selectedSubject = '';
     let selectedLevel = '';
     let selectedQuiz = '';
-    let rightAnswers = []
+    let rightAnswers = [];
+    let resultsData;
     let score = 0
+    const correctAnswersHelper = [];
+    const selectedHelper = [];
     const token = localStorage.getItem('token')
     const decodedToken = jwt_decode(token);
     console.log(decodedToken);
@@ -65,6 +68,14 @@ document.addEventListener('DOMContentLoaded', () => {
     }
     
     function loadQuiz(datas) {
+        console.log("SDDDD", datas)
+        datas.map(data => {
+            correctAnswersHelper.push({
+                question_id: data.id,
+                answer: data.answer
+            })
+        });
+        console.log("helper", correctAnswersHelper);
         quizSectionDiv.innerHTML = '';
         showSection('quiz');
         datas.forEach(data => {
@@ -96,22 +107,68 @@ document.addEventListener('DOMContentLoaded', () => {
     console.log('Quiz submitted');
     // You can add code here to process the answers and show results
     
-    document.querySelectorAll('.question').forEach(questionDiv => {
+    document.querySelectorAll('.question').forEach((questionDiv, i) => {
         const answers = {};
         const questionId = questionDiv.querySelector('input[type="radio"]').name.split('_')[1];
         const selectedOption = questionDiv.querySelector('input[type="radio"]:checked');
-        if (selectedOption) {
-            answers[questionId] = selectedOption.value;
-        }
-         score = checkAnswer(answers);
-
+        console.log("selectOption " + String(i) + ".", selectedOption.value);
+        console.log("question", questionId)
+        selectedHelper.push({
+            question_id: questionId,
+            answer: selectedOption.value
+        });
+        console.log("selectedDone", selectedHelper);
+        updateResult();
+        
     });
-    function checkAnswer(answers){
-        const objectValues = Object.values(answers)
-        const score = rightAnswers.reduce((count, element) => {
-            return objectValues.includes(element) ? count + 1 : count;
-        }, 0);
-        return score;
+    async function updateResult() {
+        try {
+
+            const scores = correctAnswersHelper.map((data, index) => {
+                return {
+                    question_id: data.question_id,
+                    user_id: decodedToken.id,
+                    score: data.answer === selectedHelper[index].answer ? 1 : 0
+                }
+            });
+
+            console.log("SCORES", scores);
+
+            resultsData = scores.map(async data => {
+                const body = {
+                    question_id: data.question_id,
+                    score: data.score,
+                    user_id: data.user_id
+                }
+
+                const option = {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json"
+                    },
+                    body: JSON.stringify(body),
+
+                }
+                const response = await fetch(`http://localhost:3000/results`, option);
+
+                if (response.ok) {
+                    console.log("OKEY");
+                    const res = await response.json();
+                    console.log(res);
+                    return res.data;
+                }
+            });
+
+            console.log("resultsData", resultsData);
+            console.log("resultsDataLEngth", resultsData.length);
+
+            localStorage.setItem("maxScore", String(resultsData.length));
+
+            window.location.assign(window.location.origin + "/results.html");
+
+        } catch (error) {
+            console.log('Error updating results:', error);
+        }
     }
 });
 });

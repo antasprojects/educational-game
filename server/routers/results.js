@@ -5,8 +5,12 @@ const resultsController = require('../controllers/results');
 
 const resultsRouter = Router();
 
+
 resultsRouter.get("/", resultsController.index);
 resultsRouter.post("/", resultsController.create);
-// resultsRouter.get("/total-score", resultsController.totalScore)
+resultsRouter.get("/total-score/:user_id", resultsController.totalScore);
+resultsRouter.patch("/:id", resultsController.update);
+resultsRouter.delete("/:id", resultsController.destroy);
+
 
 module.exports = resultsRouter;
