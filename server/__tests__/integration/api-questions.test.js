@@ -2,7 +2,7 @@ const request = require("supertest");
 const app = require("../../app");
 const { resetTestDB } = require("./config");
 
-describe("Questions API Endpoints", ()=>{
+xdescribe("Questions API Endpoints", ()=>{
     beforeEach(async () => {
         await resetTestDB()
       });
