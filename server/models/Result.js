@@ -21,12 +21,12 @@ class Result {
         }
     }
 
-    static async showTotalUserScore(user_id, subject, level, group_num, update_at)  {
-        if (!user_id || !group_num || !level || !subject || !update_at) {
+    static async showTotalUserScore(userId, subject, level, groupNum, updatedAt)  {
+        if (!userId || !groupNum || !level || !subject || !updatedAt) {
             throw new Error("Fields missing")
         }
         // 2024-08-08 09:24:55
-        const thirtySecInterval = addSecondsToTime(update_at, 30)
+        const thirtySecInterval = addSecondsToTime(updatedAt, 30)
 
         const response = await db.query(`SELECT r.user_id,
                                                qb.subject, 
@@ -41,7 +41,7 @@ class Result {
                                           AND r.user_id = $4
                                           AND r.updated_at >= $5::timestamp
                                           AND r.updated_at <= $6::timestamp
-                                        GROUP BY r.user_id, qb.subject, qb.level, qb.group_num;`, [subject, level, group_num, user_id, update_at, thirtySecInterval])
+                                        GROUP BY r.user_id, qb.subject, qb.level, qb.group_num;`, [subject, level, groupNum, userId, updatedAt, thirtySecInterval])
         
 
         if (response.rows.length === 0) {
@@ -133,7 +133,7 @@ class Result {
     
     static async create(data) {
         const { user_id, score, question_id } = data;
-        if (!user_id || !score || !question_id ) {
+        if (user_id === undefined || score === undefined || question_id === undefined ) {
             throw new Error("One of the required fields missing");
         }
 
