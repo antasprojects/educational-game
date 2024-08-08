@@ -12,10 +12,10 @@
     margin-bottom: 10px;
 }
 
-#quizResults button {
+#quizResults retryQuiz {
     width: 60%;
     padding: 12px;
-    font-size: 1em;
+    font-size: 2em;
     margin: 15px auto;
 }
 
