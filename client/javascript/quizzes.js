@@ -1,5 +1,5 @@
-
 document.addEventListener('DOMContentLoaded', () => {
+
     const subjectButtons = document.querySelectorAll('.subject-btn');
     const levelButtons = document.querySelectorAll('.level-btn');
     const quizButtons = document.querySelectorAll('.quiz-btn');
@@ -16,6 +16,11 @@ document.addEventListener('DOMContentLoaded', () => {
     let selectedQuiz = '';
     let rightAnswers = []
     let score = 0
+    const token = localStorage.getItem('token')
+    const decodedToken = jwt_decode(token);
+    console.log(decodedToken);
+    console.log(decodedToken.id);
+
     
 
     function showSection(sectionId) {
