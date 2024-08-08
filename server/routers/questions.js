@@ -1,4 +1,5 @@
 const { Router } = require('express');
+const authenticator = require("../middleware/authenticator");
 
 const questionsContoller = require('../controllers/questions');
 

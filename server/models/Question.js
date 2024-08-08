@@ -44,7 +44,9 @@ static async getOneBySubjectLevelGroup(subject, level, group_num){
 static async create(data){
     try{
         const { question, option_1, option_2, option_3, option_4, answer, subject, level, group_num } = data;
-        
+        if (!question || !option_1 || !option_2 || !option_3 || !option_4 || !answer || !subject || !level || !group_num){
+            throw new Error("Mandatory fields have not been passed")
+        }
         let response = await db.query("INSERT INTO question_bank (question, option_1, option_2, option_3, option_4, answer, subject, level, group_num) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9) RETURNING *;",
             [question, option_1, option_2, option_3, option_4, answer, subject, level, group_num]);
         const newId = response.rows[0].id;
