@@ -1,131 +1,141 @@
+/* Main content wrapper */
 .content-wrapper {
     display: flex;
-    justify-content: space-between;
-    gap: 4rem;
+    flex-direction: column;
+    align-items: center;
+    max-width: 1200px;
     margin: 0 auto;
-    max-width: 1400px;
     padding: 2rem;
 }
 
-.how-to-use, .developer {
-    flex: 1;
-    max-width: 400px;
-    text-align: left;
-    background-color: #f0f0f0;
-    padding: 2rem;
+/* Styling for How to Use and Team sections */
+.how-to-use, .team {
+    width: 100%;
+    max-width: 800px;
+    background-color:linen;
     border-radius: 10px;
-    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
-    transition: transform 0.3s ease;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    margin-bottom: 2rem;
+    padding: 2rem;
 }
 
-.how-to-use:hover, .developer:hover {
-    transform: translateY(-5px);
+/* Section headers */
+.how-to-use h2, .team h2 {
+    color: cream;
+    font-size: 1.8rem;
+    margin-bottom: 1rem;
+    text-align: center;
 }
 
+/* How to Use list */
 .how-to-use ol {
     padding-left: 1.5rem;
+    color: #555555;
 }
 
-.team {
-    flex: 2;
-    max-width: 800px;
-}
-
+/* Developer grid layout */
 .developer-grid {
     display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 2rem;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1.5rem;
 }
 
+/* Individual developer cards */
 .developer {
-    background-color: #000;
-    color: #fff;
+    background-color:#5a220c;
+    border-radius: 8px;
+    padding: 1.5rem;
+    text-align: center;
     transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
 .developer:hover {
     transform: translateY(-5px);
-    box-shadow: 0 12px 24px rgba(0, 0, 0, 0.2);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
 }
 
+/* Developer name styling */
 .developer h3 {
-    color: #fff;
-    transition: color 0.3s ease;
+    color: cream;
+    font-size: 1.2rem;
+    margin-bottom: 0.5rem;
 }
 
-.developer:hover h3 {
-    color: #4CAF50;
+/* Developer description */
+.developer p {
+    color:cream;
+    font-size: 0.9rem;
+    margin-bottom: 1rem;
 }
 
+/* GitHub link styling */
 .github-link {
     display: inline-block;
-    margin-top: 0.5rem;
     padding: 0.5rem 1rem;
-    background-color: #4CAF50;
-    color: white;
+    background-color: linen;
+    color: #5a220c;
     text-decoration: none;
     border-radius: 5px;
-    transition: all 0.3s ease;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-    transform: translateZ(0);
+    font-size: 0.9rem;
+    transition: background-color 0.3s ease;
 }
 
 .github-link:hover {
-    background-color: #45a049;
-    transform: translateY(-2px) translateZ(5px);
-    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
+    background-color: blueviolet;
 }
 
-/* arrange our name cards 2 on the top and 2 at the buttom in the our team Div */
-.developer-grid {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    gap: 2rem;
+/* Responsive design for smaller screens */
+@media (max-width: 768px) {
+    .developer-grid {
+        grid-template-columns: 1fr;
+    }
 }
 
-.developer {
-    background-color: #000;
-    color: #fff;
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
+/* Additional professional touches */
+body {
+    font-family: 'Arial', sans-serif;
+    line-height: 1.6;
+    color: #333333;
 }
 
-.developer:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 12px 24px rgba(0, 0, 0, 0.2);
+/* Smooth scrolling for better UX */
+html {
+    scroll-behavior: smooth;
 }
 
-.developer h3 {
-    color: #fff;
-    transition: color 0.3s ease;
+/* Subtle animations for interactive elements */
+button, .github-link {
+    transition: all 0.3s ease;
 }
 
-.developer:hover h3 {
-    color: #4CAF50;
+button:hover, .github-link:hover {
+    transform: translateY(-2px);
 }
 
-/* move our team big container to the right */
-.team {
-    align-self: flex-start;
-    margin-left: 5%;
+/* Improved focus states for accessibility */
+button:focus, .github-link:focus {
+    outline: 2px solid #0366d6;
+    outline-offset: 2px;
 }
 
-.team {
-    flex: 3;
-    max-width: 1200px;
-    align-self: flex-start;
-    margin-left: -90px;
-    margin-bottom: 5%;
-    width: 130%;
-    margin-top: 0%;
+.about-us-team-title {
+    color: #5a220c;  /* Brown color for "Our Team" text */
 }
 
-
-.developer-grid {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    gap: 2rem;
+.about-us-developer-name,
+.about-us-developer-contact {
+    color: cream;  /* Cream color for developer names and contact info */
 }
 
-.developer {
-    width: 80%;
+.about-us-github-link {
+    color: #5a220c;  /* Brown color for GitHub button text */
+    background-color: linen;  /* Keeping the linen background for the buttons */
+}
+
+.about-us-developer {
+    background-color: #5a220c;  /* Brown background for developer cards */
+}
+
+.developer h4 {
+    color: cream;
 }
