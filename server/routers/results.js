@@ -7,5 +7,6 @@ const resultsRouter = Router();
 
 resultsRouter.get("/", resultsController.index);
 resultsRouter.post("/", resultsController.create);
+// resultsRouter.get("/total-score", resultsController.totalScore)
 
 module.exports = resultsRouter;
