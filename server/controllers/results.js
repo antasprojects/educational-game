@@ -4,7 +4,7 @@ async function index(req, res) {
     try {
         console.log("REEEEEEEEEE") // reaches this point
         const results = await Result.getAll();
-        console.log("GOES PASS"); // doesnt reach this point. I am doing integration testing Therefore I dont need to test Result.getAll why wont it reach this point?
+        console.log("GOES PASS", results[0].updated_at); // doesnt reach this point. I am doing integration testing Therefore I dont need to test Result.getAll why wont it reach this point?
         res.status(200).json({ data: results });
 
 

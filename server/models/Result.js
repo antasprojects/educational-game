@@ -1,5 +1,6 @@
 const db = require('../db/connect');
-const QuestionBank = require("./Question")
+const QuestionBank = require("./Question");
+const { addSecondsToTime } = require("../utils/timeHelper");
 
 class Result {
 
@@ -8,12 +9,47 @@ class Result {
         this.user_id = result.user_id;
         this.score = result.score;
         this.question_id = result.question_id;
-        this.created_at = result.created_at;
-        this.updated_at = result.updated_at;
+        // Ensure result.created_at is a Date object or convert it
+        this.created_at = (result.created_at instanceof Date ? result.created_at : new Date(result.created_at))
+            .toISOString().replace(/T/, " ").replace(/\..+/, "");
+        
+        // Ensure result.updated_at is a Date object or convert it
+        this.updated_at = (result.updated_at instanceof Date ? result.updated_at : new Date(result.updated_at))
+            .toISOString().replace(/T/, " ").replace(/\..+/, "");
         if (result.QuestionBank) {
             this.QuestionBank = result.QuestionBank.filter(question => new QuestionBank(question) !== undefined);
         }
     }
+
+    static async showTotalUserScore(user_id, subject, level, group_num, update_at)  {
+        if (!user_id || !group_num || !level || !subject || !update_at) {
+            throw new Error("Fields missing")
+        }
+        // 2024-08-08 09:24:55
+        const thirtySecInterval = addSecondsToTime(update_at, 30)
+
+        const response = await db.query(`SELECT r.user_id,
+                                               qb.subject, 
+                                               qb.level, 
+                                               qb.group_num, 
+                                               SUM(r.score) AS score
+                                        FROM result r
+                                        JOIN question_bank qb ON r.question_id = qb.id
+                                        WHERE qb.subject = $1
+                                          AND qb.level = $2
+                                          AND qb.group_num = $3
+                                          AND r.user_id = $4
+                                          AND r.updated_at >= $5::timestamp
+                                          AND r.updated_at <= $6::timestamp
+                                        GROUP BY r.user_id, qb.subject, qb.level, qb.group_num;`, [subject, level, group_num, user_id, update_at, thirtySecInterval])
+        
+
+        if (response.rows.length === 0) {
+            throw new Error("No final result");
+        }
+        return response.rows[0];
+    }
+
 
     static async showResultAssociateQuestionBank(id, subject, level, group_num) {
 
@@ -50,8 +86,8 @@ class Result {
             user_id: r[0].user_id,
             score: r[0].score,
             question_id: r[0].question_id,
-            created_at: r[0].created_at.toISOString(),
-            updated_at: r[0].updated_at.toISOString(),
+            created_at: r[0].created_at,
+            updated_at: r[0].updated_at,
             QuestionBank: []
         };
 
@@ -80,9 +116,7 @@ class Result {
     }
 
     static async getAll() {
-        console.log("first here" )
         const results = await db.query("SELECT * FROM result;");
-        console.log("worked pass db") // same setup still why wont the query get tested?
         if (results.rows.length === 0) {
             throw new Error("No results available");
         }
@@ -121,6 +155,7 @@ class Result {
             }
         }
 
+        this.score = data.score;
         this.updated_at = new Date();
 
         const response = await db.query(`UPDATE users
