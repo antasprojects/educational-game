@@ -25,9 +25,13 @@ class Result {
         if (!userId || !groupNum || !level || !subject || !updatedAt) {
             throw new Error("Fields missing")
         }
-        // 2024-08-08 09:24:55
-        const thirtySecInterval = addSecondsToTime(updatedAt, 30)
 
+        console.log("Begin", userId, subject, level, groupNum, updatedAt);
+        // 2024-08-08 09:24:55
+        const subjectLower = subject.toLowerCase();
+        const levelLower = level.toLowerCase();
+        const thirtySecInterval = addSecondsToTime(updatedAt, 30);
+        console.log("DONE here")
         const response = await db.query(`SELECT r.user_id,
                                                qb.subject, 
                                                qb.level, 
@@ -35,15 +39,15 @@ class Result {
                                                SUM(r.score) AS score
                                         FROM result r
                                         JOIN question_bank qb ON r.question_id = qb.id
-                                        WHERE qb.subject = $1
-                                          AND qb.level = $2
+                                        WHERE LOWER(qb.subject) = $1
+                                          AND LOWER(qb.level) = $2
                                           AND qb.group_num = $3
                                           AND r.user_id = $4
                                           AND r.updated_at >= $5::timestamp
                                           AND r.updated_at <= $6::timestamp
-                                        GROUP BY r.user_id, qb.subject, qb.level, qb.group_num;`, [subject, level, groupNum, userId, updatedAt, thirtySecInterval])
+                                        GROUP BY r.user_id, qb.subject, qb.level, qb.group_num;`, [subjectLower, levelLower, groupNum, userId, updatedAt, thirtySecInterval])
         
-
+        console.log("object", response.rows);
         if (response.rows.length === 0) {
             throw new Error("No final result");
         }

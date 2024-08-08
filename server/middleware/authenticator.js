@@ -2,6 +2,8 @@ const jwt = require('jsonwebtoken')
 
 function authenticator(req, res, next){
     const token = req.headers['authorization'];
+    console.log("auth", token)
+    console.log("ss", process.env.SECRET_TOKEN)
 
     if (token) {
         // using the `jsonwebtoken` library to verify the received token

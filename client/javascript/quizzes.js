@@ -36,6 +36,7 @@ document.addEventListener('DOMContentLoaded', () => {
     subjectButtons.forEach(button => {
         button.addEventListener('click', () => {
             selectedSubject = button.dataset.subject;
+            console.log("dataset subject", button);
             showSection('quiz-level');
         });
     });
@@ -55,7 +56,10 @@ document.addEventListener('DOMContentLoaded', () => {
     });
     async function fetchQuizData(selectedSubject, selectedLevel, selectedQuiz) {
         try {
-            const respData = await fetch(`https://educational-game-api.onrender.com/questions/quizdata/${selectedQuiz}?subject=${selectedSubject}&level=${selectedLevel}`);
+            localStorage.setItem("subject", selectedSubject);
+            localStorage.setItem("level", selectedLevel);
+            localStorage.setItem("quizGroup", selectedQuiz);
+            const respData = await fetch(`http://localhost:3000/questions/quizdata/${selectedQuiz}?subject=${selectedSubject}&level=${selectedLevel}`);
            if (respData.ok) {
                 const data = await respData.json();
                 loadQuiz(data);
@@ -68,7 +72,6 @@ document.addEventListener('DOMContentLoaded', () => {
     }
     
     function loadQuiz(datas) {
-        console.log("SDDDD", datas)
         datas.map(data => {
             correctAnswersHelper.push({
                 question_id: data.id,
@@ -134,7 +137,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
             console.log("SCORES", scores);
 
-            resultsData = scores.map(async data => {
+            resultsData = await Promise.all(scores.map(async data => {
                 const body = {
                     question_id: data.question_id,
                     score: data.score,
@@ -152,16 +155,13 @@ document.addEventListener('DOMContentLoaded', () => {
                 const response = await fetch(`http://localhost:3000/results`, option);
 
                 if (response.ok) {
-                    console.log("OKEY");
                     const res = await response.json();
                     console.log(res);
                     return res.data;
                 }
-            });
+            }));
 
-            console.log("resultsData", resultsData);
-            console.log("resultsDataLEngth", resultsData.length);
-
+            localStorage.setItem("resultUpdate", resultsData[0].updated_at);
             localStorage.setItem("maxScore", String(resultsData.length));
 
             window.location.assign(window.location.origin + "/results.html");
@@ -172,3 +172,6 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 });
 });
+
+
+// user_id, subject, level, group_num, update_at
