@@ -82,7 +82,36 @@ header {
     width: 100%;
     background-color: rgba(49, 18, 18, 0.8);
     color: #fff;
-    padding: 2px;
+    padding: 5px;header {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 10px 20px;
+        height: 60px;
+    }
+    
+    .logo img {
+        max-height: 100%;
+        width: auto;
+    }
+    
+    #nav-bar ul {
+        display: flex;
+        list-style-type: none;
+        margin: 0;
+        padding: 0;
+    }
+    
+    #nav-bar li {
+        margin-left: 20px;
+    }
+    
+    #nav-bar a {
+        text-decoration: none;
+        color: #333;
+        font-weight: bold;
+    }
+    
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -92,8 +121,8 @@ header {
 .logo {
     font-size: 0.5rem;
     font-weight: bold;
-    width: 60px;
-    height: 60px;
+    width: 82px;
+    height: 82px;
     background-size: contain;
     background-repeat: no-repeat;
 }
@@ -345,4 +374,13 @@ footer {
     line-height: 1.6;
     text-shadow: none;
     font-weight: normal;
+}
+
+.logo {
+    padding: 5px;
+    margin-right: 20px;
+}
+
+.content-wrapper {
+    box-shadow: 2px 10px 10px rgba(83, 42, 13, 0.5); /* Brown shadow */
 }

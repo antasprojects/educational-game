@@ -6,23 +6,23 @@ body {
     margin: 0;
     padding: 0;
     font-family: 'Gothic A1', sans-serif;
-    background: linear-gradient(145deg, rgb(74, 31, 31), rgb(58, 123, 58), rgb(49, 18, 18));
+    background-color: #f5e6d3;
     min-height: 100vh;
 }
 
 /* Login and Register form styles */
 #login, #register {
-    background: linear-gradient(145deg, rgba(49, 18, 18, 0.9), rgba(31, 119, 31, 0.9), rgba(49, 18, 18, 0.9));
+    background-color: #fff5e6;
     padding: 25px;
     border-radius: 15px;
     box-shadow:
-        5px 5px 15px rgba(0, 0, 0, 0.4),
-        inset -3px -3px 7px rgba(0, 0, 0, 0.2),
-        inset 3px 3px 7px rgba(255, 255, 255, 0.1);
+        5px 5px 15px rgba(74, 55, 40, 0.2),
+        inset -3px -3px 7px rgba(74, 55, 40, 0.1),
+        inset 3px 3px 7px rgba(255, 255, 255, 0.3);
     width: 260px;
     transform: perspective(500px) rotateX(1deg) rotateY(-1deg);
     transition: all 0.3s ease;
-    margin-right: 5%; /* Add some right margin */
+    margin-right: 15%;
 }
 
 /* Hover effect for forms */
@@ -32,13 +32,13 @@ body {
 
 /* Form heading styles */
 #login h2, #register h2 {
-    color: white;
+    color: #4a3728;
     text-align: center;
     margin-bottom: 15px;
     font-size: 20px;
     text-transform: uppercase;
     letter-spacing: 1px;
-    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
+    text-shadow: 1px 1px 2px rgba(74, 55, 40, 0.2);
 }
 
 /* Form layout */
@@ -50,7 +50,7 @@ body {
 /* Label styles */
 #loginForm label, #registerForm label {
     margin-bottom: 3px;
-    color: white;
+    color: #4a3728;
     font-size: 14px;
 }
 
@@ -58,17 +58,23 @@ body {
 #loginForm input, #registerForm input {
     padding: 8px;
     margin-bottom: 10px;
-    border: 1px solid rgba(255, 255, 255, 0.3);
+    border: 1px solid #d1c3b4;
     border-radius: 4px;
-    background-color: rgba(255, 255, 255, 0.9);
-    color: black;
+    background-color: #fffaf0;
+    color: #4a3728;
     font-size: 14px;
+    transition: all 0.3s ease;
+}
+
+#loginForm input:focus, #registerForm input:focus {
+    box-shadow: 0 0 5px rgba(74, 55, 40, 0.3);
+    outline: none;
 }
 
 /* Button styles */
 #loginForm button, #registerForm button {
-    background-color: #4CAF50;
-    color: white;
+    background-color: #6b5241;
+    color: #fff5e6;
     padding: 10px;
     border: none;
     border-radius: 4px;
@@ -82,7 +88,7 @@ body {
 
 /* Button hover effect */
 #loginForm button:hover, #registerForm button:hover {
-    background-color: #45a049;
+    background-color: #8b6b55;
 }
 
 /* Additional options layout */
@@ -95,39 +101,31 @@ body {
 
 /* Link styles */
 .login-options a, .register-options a {
-    color: white;
+    color: #4a3728;
     text-decoration: none;
     margin-top: 5px;
     font-size: 12px;
+    transition: color 0.3s ease;
 }
 
 /* Link hover effect */
 .login-options a:hover, .register-options a:hover {
+    color: #6b5241;
     text-decoration: underline;
 }
 
-/* move login and register form- to right and make them smaller */
-
+/* Position forms */
 main {
     display: flex;
     justify-content: flex-end;
     align-items: flex-start;
     min-height: calc(100vh - 200px);
-    padding-right: 5%;
+    padding-right: 15%;
     padding-top: 100px;
 }
 
-#login, #register {
-    width: 250px;
-    margin-left: auto;
-}
-
-#login h2, #register h2 {
-    font-size: 18px;
-}
-
-#loginForm input, #loginForm button,
-#registerForm input, #registerForm button {
-    font-size: 14px;
-    padding: 8px;
+/*logo size */
+.logo img {
+    max-height: 100%;
+    width: auto;
 }
