@@ -15,7 +15,6 @@ async function show (req, res) {
         const subject = (req.query.subject);
         const level = req.query.level;
         const questions = await Question.getOneBySubjectLevelGroup(subject, level, group_num);
-        
         res.status(200).json(questions);
     } catch (err) {
         res.status(404).json({"error": err.message})

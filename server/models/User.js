@@ -6,6 +6,7 @@ class User {
         this.id = id;
         this.email = email;
         this.password = password;
+        this.admin = false
     }
 
     static async getUserById(id) {
@@ -35,6 +36,7 @@ class User {
         console.log(response.rows[0]);
         const newId = response.rows[0].id;
         const newUser = await User.getUserById(newId);
+        console.log(newUser);
         return newUser;
     }
 }

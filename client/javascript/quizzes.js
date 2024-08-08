@@ -1,5 +1,5 @@
-
 document.addEventListener('DOMContentLoaded', () => {
+
     const subjectButtons = document.querySelectorAll('.subject-btn');
     const levelButtons = document.querySelectorAll('.level-btn');
     const quizButtons = document.querySelectorAll('.quiz-btn');
@@ -16,6 +16,11 @@ document.addEventListener('DOMContentLoaded', () => {
     let selectedQuiz = '';
     let rightAnswers = []
     let score = 0
+    const token = localStorage.getItem('token')
+    const decodedToken = jwt_decode(token);
+    console.log(decodedToken);
+    console.log(decodedToken.id);
+
     
 
     function showSection(sectionId) {
@@ -47,7 +52,7 @@ document.addEventListener('DOMContentLoaded', () => {
     });
     async function fetchQuizData(selectedSubject, selectedLevel, selectedQuiz) {
         try {
-            const respData = await fetch(`http://localhost:3000/questions/quizdata/${selectedQuiz}?subject=${selectedSubject}&level=${selectedLevel}`);
+            const respData = await fetch(`https://educational-game-api.onrender.com/questions/quizdata/${selectedQuiz}?subject=${selectedSubject}&level=${selectedLevel}`);
            if (respData.ok) {
                 const data = await respData.json();
                 loadQuiz(data);
@@ -91,7 +96,6 @@ document.addEventListener('DOMContentLoaded', () => {
     console.log('Quiz submitted');
     // You can add code here to process the answers and show results
     
-   
     document.querySelectorAll('.question').forEach(questionDiv => {
         const answers = {};
         const questionId = questionDiv.querySelector('input[type="radio"]').name.split('_')[1];
@@ -99,14 +103,15 @@ document.addEventListener('DOMContentLoaded', () => {
         if (selectedOption) {
             answers[questionId] = selectedOption.value;
         }
-         checkAnswer(answers)  
+         score = checkAnswer(answers);
+
     });
     function checkAnswer(answers){
-        rightAnswers.forEach(rightAnswer=> {
-            if(rightAnswer === answers[questionId]){
-                score ++
-            }
-        })
+        const objectValues = Object.values(answers)
+        const score = rightAnswers.reduce((count, element) => {
+            return objectValues.includes(element) ? count + 1 : count;
+        }, 0);
+        return score;
     }
 });
 });

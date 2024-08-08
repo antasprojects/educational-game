@@ -1,10 +1,12 @@
 const db = require("../../../db/connect");
 const Result = require("../../../models/Result");
+const { addSecondsToTime } = require("../../../utils/timeHelper");
 
 let resultObject;
-const datenow = new Date();
+const datetime = new Date();
+const datenow = datetime.toISOString().replace(/T/, " ").replace(/\..+/, "");
 
-xdescribe("Result Model", () => {
+describe("Result Model", () => {
 
     beforeEach(() => {
         resultObject = {
@@ -12,8 +14,8 @@ xdescribe("Result Model", () => {
             user_id: 2,
             score: 10,
             question_id: 3,
-            created_at: datenow,
-            updated_at: datenow
+            created_at: datetime,
+            updated_at: datetime
         };
         jest.clearAllMocks();
     });
@@ -22,7 +24,6 @@ xdescribe("Result Model", () => {
     describe("getAll", () => {
         it("should return list of all results", async () => {
             // Arrange
-            const datenow = new Date();
             const mockResults = [
                 {
                     id: 1,
@@ -170,11 +171,19 @@ xdescribe("Result Model", () => {
             // Arrange
 
             const mockResults = [
-                { ...resultObject, score: copyResultObject.score }
+                { 
+                    ...resultObject, 
+                    score: copyResultObject.score, 
+                    created_at: new Date(),
+                    updated_at: new Date()
+                }
             ];
             jest.spyOn(db, "query").mockResolvedValueOnce({ rows: mockResults });
+            const mockResult = mockResults[0];
 
+            const correctTime = mockResult.created_at.toISOString().replace("T", " ").replace(/\..+/, "");
             // Act
+
             const result = new Result(resultObject);
             expect(result.score).toBe(10);
 
@@ -186,8 +195,9 @@ xdescribe("Result Model", () => {
 
             expect(db.query).toHaveBeenCalledTimes(1);
             expect(updatedResult).toEqual({
-                ...resultObject,
-                score: copyResultObject.score
+                ...mockResult,
+                created_at: correctTime,
+                updated_at: correctTime
             });
         });
 
@@ -224,13 +234,18 @@ xdescribe("Result Model", () => {
             // Act
             const result = new Result(resultObject);
             const deletedResult = await result.destroy();
+            const mockResult = mockResults[0];
+
+            const correctTime = mockResult.created_at.toISOString().replace("T", " ").replace(/\..+/, "");
 
             // Assert
             expect(result).toBeInstanceOf(Result);
             expect(result.score).toBe(10);
             expect(db.query).toHaveBeenCalledTimes(1);
             expect(deletedResult).toEqual({
-                ...resultObject
+                ...resultObject,
+                created_at: correctTime,
+                updated_at: correctTime
             });
         });
 
@@ -262,8 +277,8 @@ xdescribe("Result Model", () => {
             delete resultObject.created_at;
             delete resultObject.update_at;
 
-            resultObject.created_at = datenow.toISOString();
-            resultObject.updated_at = datenow.toISOString();
+            resultObject.created_at = datenow;
+            resultObject.updated_at = datenow;
 
         });
 
@@ -274,7 +289,7 @@ xdescribe("Result Model", () => {
 
             jest.spyOn(db, "query").mockResolvedValueOnce({ rows: mockResult });
 
-            const result = await Result.showResultAssociateQuestionBank(testQuery.id, testQuery.subject, testQuery.level, testQuery.group_num, testQuery.user_id);
+            const result = await Result.showResultAssociateQuestionBank(2, "History", "Intermediate", 3);
 
             expect(result).toBeInstanceOf(Result);
             expect(result.question_id).toBe(3);
@@ -284,16 +299,7 @@ xdescribe("Result Model", () => {
         });
         
         it("throws if group_num or id are not provided", async () => {
-            // return the promise directly
-            await expect(Result.showResultAssociateQuestionBank(2, "Poetry", 4, 5)).rejects.toThrow("Fields missing");
-
-            // Alternatively, test with 3 arguments
-            await expect(Result.showResultAssociateQuestionBank(2, "Poetry", 4)).rejects.toThrow("Fields missing");
-
-            // Alternatively, test with 2 arguments
-            await expect(Result.showResultAssociateQuestionBank(2, "Poetry")).rejects.toThrow("Fields missing");
-
-            // Alternatively, test with 1 arguments
+            // Do not use await here; instead, return the promise directly
             await expect(Result.showResultAssociateQuestionBank(2)).rejects.toThrow("Fields missing");
 
             // Alternatively, test with no arguments
@@ -303,7 +309,7 @@ xdescribe("Result Model", () => {
         it("throws if db query returns no value", async () => {
             // Act & Arrange
             jest.spyOn(db, "query").mockResolvedValueOnce({ rows: [] });
-            await expect(Result.showResultAssociateQuestionBank(1, "Poetry", "Elite", 8, 2)).rejects.toThrow("Result not found");
+            await expect(Result.showResultAssociateQuestionBank(1, "Poetry", "Elite", 8)).rejects.toThrow("Result not found");
         });
 
         it("throws if inner association is a miss match", async () => {
@@ -314,9 +320,109 @@ xdescribe("Result Model", () => {
             jest.spyOn(db, "query").mockResolvedValueOnce({ rows: mockResult });
 
             
-            await expect(Result.showResultAssociateQuestionBank(1, "Poetry", "Elite", 8, 7)).rejects.toThrow("Association miss match");
+            await expect(Result.showResultAssociateQuestionBank(1, "Poetry", "Elite", 8)).rejects.toThrow("Association miss match");
         });
 
     });
+
+
+    describe("total score of a user", () => {
+        let totalScore;
+        let allResults;
+        beforeEach(() => {
+            allResults = [
+                {
+                    id: 1,
+                    user_id: 1,
+                    score: 6,
+                    question_id: 2,
+                    created_at: datenow,
+                    updated_at: datenow,
+                },
+                {
+                    id: 2,
+                    user_id: 3,
+                    score: 8,
+                    question_id: 1,
+                    created_at: datenow,
+                    updated_at: datenow,
+                },
+                {
+                    id: 3,
+                    user_id: 5,
+                    score: 10,
+                    question_id: 3,
+                    created_at: datenow,
+                    updated_at: datenow,
+                },
+            ];
+            totalScore = {
+                user_id: 3,
+                subject: "History",
+                level: "Beginner",
+                group_num: 2,
+                score: 60
+            };
+
+            // resultObject.created_at = datenow;
+            // resultObject.updated_at = datenow;
+
+        });
+
+        it("returns the total score a user has for particular subject based on level and group", async () => {
+            const mockResult = [
+                totalScore
+            ];
+            jest.spyOn(db, "query").mockResolvedValueOnce({ rows: allResults });
+
+            const totalResult = await Result.getAll();
+            
+            const update_time = totalResult[0].updated_at
+
+            jest.spyOn(db, "query").mockResolvedValueOnce({ rows: mockResult });
+
+            const result = await Result.showTotalUserScore(3, "History", "Beginner", 2, update_time);
+
+            expect(result).toBeInstanceOf(Object);
+            expect(result.user_id).toBe(3);
+            expect(result.score).toBe(60);
+            expect(result.subject).toBe("History");
+            expect(result.level).toBe("Beginner");
+            expect(result.group_num).toBe(2);
+            expect(result).toEqual(totalScore);
+        });
+        
+        it("throws if the parameters are not provided are not provided", async () => {
+            // Test with 4 arguments
+            await expect(Result.showTotalUserScore(2, "History", "Beginner", 2)).rejects.toThrow("Fields missing");
+            // Alternatively, test with 3 arguments
+            await expect(Result.showTotalUserScore(2, "History", "Beginner")).rejects.toThrow("Fields missing");
+            // Alternatively, test with 2 arguments
+            await expect(Result.showTotalUserScore(2, "History")).rejects.toThrow("Fields missing");
+            // Alternatively, test with 1 argument
+            await expect(Result.showTotalUserScore(2)).rejects.toThrow("Fields missing");
+            // Alternatively, test with no arguments
+            await expect(Result.showTotalUserScore()).rejects.toThrow("Fields missing");
+        });
+
+        it("throws if db query returns no value", async () => {
+            // Act & Arrange
+            jest.spyOn(db, "query").mockResolvedValueOnce({ rows: [] });
+            await expect(Result.showTotalUserScore(1, "Poetry", "Elite", 8, "2024-08-08 09:24:55")).rejects.toThrow("No final result");
+        });
+
+    });
+
+    describe("test helper function", () => {
+        it("addSecondsToTime 2024-08-08 09:24:55 returns 2024-08-08 09:25:25", () => {
+            const inputDatetime = "2024-08-08 09:24:55";
+            const secondsToAdd = 30;
+            const expectedDatetime = "2024-08-08 09:25:25";
+    
+            const result = addSecondsToTime(inputDatetime, secondsToAdd);
+    
+            expect(result).toBe(expectedDatetime);
+        })
+    })
 
 });

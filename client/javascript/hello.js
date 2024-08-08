@@ -10,7 +10,7 @@ document.addEventListener('DOMContentLoaded', async () => {
       };
       
     try {
-        const response = await fetch("http://localhost:3000/hello", options);
+        const response = await fetch("https://educational-game-api.onrender.com/hello", options);
 
         if (response.ok) {
         } else {
