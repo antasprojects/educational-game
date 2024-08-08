@@ -7,7 +7,7 @@ const questionRouter = Router();
 
 questionRouter.get("/", questionsContoller.index);
 
-questionRouter.get("/quizdata/:id", authenticator, questionsContoller.show);
+questionRouter.get("/quizdata/:id", questionsContoller.show);
 
 questionRouter.post("/", questionsContoller.create)
 

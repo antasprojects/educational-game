@@ -4,7 +4,7 @@
     "setup-db": "node ./db/setup.js",
     "test": "jest --watchAll --verbose --detectOpenHandles --runInBand",
     "coverage": "jest --coverage",
-    "setup-test-db": "NODE_ENV=test node ./db/setup.js",
+    "setup-test-db": "set NODE_ENV=test&& node ./db/setup.js",
     "start": "node index.js"
   },
   "devDependencies": {
