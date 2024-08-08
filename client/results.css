@@ -19,6 +19,20 @@
     margin: 15px auto;
 }
 
+
+
 #logout:hover {
     cursor: pointer;
+}
+
+#retryQuiz {
+    color: #5a220c;
+    font-family: 'Goudy Old Style', 'Garamond', serif;
+    font-size: 1.2em;
+    font-weight: bold;
+    padding: 10px 20px;
+    text-transform: capitalize;
+    margin: 10px;
+    margin-left: 30px;
+    box-sizing: border-box;
 }
