@@ -11,7 +11,6 @@ function authenticator(req, res, next){
                 res.status(403).json({ err: 'Invalid token' })
             } else {
                 // if all went well, continue to the route handler (the next argument to the `router.get` above)
-                console.log(data);
                 next();
             }
         })
