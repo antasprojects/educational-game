@@ -41,6 +41,8 @@ document.addEventListener("DOMContentLoaded", () => {
           utcToBst.getSeconds()
         )}`.replace(/ /g, "%20");
 
+        console.log(bst);
+
       console.log("OPTIONS!", options);
       const response = await fetch(
         `https://educational-game-api.onrender.com/results/total-score/${decodedToken.id}?subject=${subject}&level=${level}&group_num=${quizGroup}&updated_at=${bst}`,
