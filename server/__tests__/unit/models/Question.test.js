@@ -41,9 +41,8 @@ describe('Question', ()=>{
     
             const result = await Question.getOneBySubjectLevelGroup('History', 'easy', 1);
     
-            expect(db.query).toHaveBeenCalledWith(
-                "SELECT question, option_1, option_2, option_3, option_4, answer FROM question_bank WHERE subject = $1 AND level = $2 AND group_num = $3;",
-                ['History', 'Easy', 1]
+            expect(db.query).toHaveBeenCalledWith("SELECT id, question, option_1, option_2, option_3, option_4, answer FROM question_bank WHERE LOWER(subject) = $1 AND LOWER(level) = $2 AND group_num = $3;",
+                ['history', 'easy', 1]
             );
             expect(result).toHaveLength(2);
             expect(result[0]).toBeInstanceOf(Question);
@@ -55,8 +54,8 @@ describe('Question', ()=>{
             jest.spyOn(db, 'query').mockResolvedValueOnce({ rows: [] });
             await expect(Question.getOneBySubjectLevelGroup('science', 'medium', 2)).rejects.toThrow("No Questions in that group");
             expect(db.query).toHaveBeenCalledWith(
-                "SELECT question, option_1, option_2, option_3, option_4, answer FROM question_bank WHERE subject = $1 AND level = $2 AND group_num = $3;",
-                ['Science', 'Medium', 2]
+                "SELECT id, question, option_1, option_2, option_3, option_4, answer FROM question_bank WHERE LOWER(subject) = $1 AND LOWER(level) = $2 AND group_num = $3;",
+                ['science', 'medium', 2]
             );
         });
 
@@ -66,8 +65,8 @@ describe('Question', ()=>{
     
             await expect(Question.getOneBySubjectLevelGroup('history', 'hard', 3)).rejects.toThrow(error);
             expect(db.query).toHaveBeenCalledWith(
-                "SELECT question, option_1, option_2, option_3, option_4, answer FROM question_bank WHERE subject = $1 AND level = $2 AND group_num = $3;",
-                ['History', 'Hard', 3]
+                "SELECT id, question, option_1, option_2, option_3, option_4, answer FROM question_bank WHERE LOWER(subject) = $1 AND LOWER(level) = $2 AND group_num = $3;",
+                ['history', 'hard', 3]
             );
         });
     });

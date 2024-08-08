@@ -28,7 +28,6 @@ static async getAll(){
 }
 static async getOneBySubjectLevelGroup(subject, level, group_num){
     try{
-        console.log("HERE REAHED!")
         const subjectNew = subject.toLowerCase();
         const levelNew = level.toLowerCase();
         const response = await db.query("SELECT id, question, option_1, option_2, option_3, option_4, answer FROM question_bank WHERE LOWER(subject) = $1 AND LOWER(level) = $2 AND group_num = $3;",[subjectNew, levelNew, group_num])

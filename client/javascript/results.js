@@ -63,9 +63,9 @@ document.addEventListener("DOMContentLoaded", () => {
       }</p>`;
       resultsContainer.innerHTML += `<p>Your score: ${data.data.score} out of ${maxScore}</p>`;
 
-      if (maxScore) {
+      if (maxScore === data.data.score) {
         resultsContainer.innerHTML += "<p>Great job! You did excellent!</p>";
-      } else if (score >= 3) {
+      } else if (data.data.score >0) {
         resultsContainer.innerHTML +=
           "<p>Good effort! Keep practicing to improve.</p>";
       } else {

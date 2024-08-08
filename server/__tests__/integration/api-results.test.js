@@ -4,7 +4,7 @@ const { resetTestDB } = require("./config");
 
 const { allResults } = require("./resultHelper");
 
-xdescribe("Results API Endpoints", () => {
+describe("Results API Endpoints", () => {
 
     let api;
     beforeEach(async () => {

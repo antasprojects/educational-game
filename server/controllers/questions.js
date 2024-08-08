@@ -11,7 +11,6 @@ async function index (req, res) {
 };
 async function show (req, res) {
     try {
-        console.log("OOOOO")
         const group_num = req.params.id;
         const subject = (req.query.subject);
         const level = req.query.level;
