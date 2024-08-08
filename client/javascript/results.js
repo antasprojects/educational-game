@@ -20,7 +20,7 @@ document.addEventListener("DOMContentLoaded", () => {
         const options = {
             method: "GET",
             headers: {
-                "authorization": localStorage.getItem("token"),
+                Authorization: localStorage.getItem("token"),
             },
         }
 
@@ -40,8 +40,8 @@ document.addEventListener("DOMContentLoaded", () => {
         const bst = `${utcToBst.getFullYear()}-${pad(utcToBst.getMonth() + 1)}-${pad(utcToBst.getDate())} ` +
                    `${pad(utcToBst.getHours())}:${pad(utcToBst.getMinutes())}:${pad(utcToBst.getSeconds())}`.replace(/ /g, "%20");
 
-
-        const response = await fetch(`http://localhost:3000/results/total-score/${decodedToken.id}?subject=${subject}&level=${level}&group_num=${quizGroup}&updated_at=${bst}`, options);
+        console.log("OPTIONS!", options);
+        const response = await fetch(`https://educational-game-api.onrender.com/results/total-score/${decodedToken.id}?subject=${subject}&level=${level}&group_num=${quizGroup}&updated_at=${bst}`, options);
         if (!response.ok) {
             throw new Error(`HTTP error! Status: ${response.status}`);
         }

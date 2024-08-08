@@ -59,7 +59,7 @@ document.addEventListener('DOMContentLoaded', () => {
             localStorage.setItem("subject", selectedSubject);
             localStorage.setItem("level", selectedLevel);
             localStorage.setItem("quizGroup", selectedQuiz);
-            const respData = await fetch(`http://localhost:3000/questions/quizdata/${selectedQuiz}?subject=${selectedSubject}&level=${selectedLevel}`);
+            const respData = await fetch(`https://educational-game-api.onrender.com/questions/quizdata/${selectedQuiz}?subject=${selectedSubject}&level=${selectedLevel}`);
            if (respData.ok) {
                 const data = await respData.json();
                 loadQuiz(data);
@@ -152,7 +152,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     body: JSON.stringify(body),
 
                 }
-                const response = await fetch(`http://localhost:3000/results`, option);
+                const response = await fetch(`https://educational-game-api.onrender.com/results`, option);
 
                 if (response.ok) {
                     const res = await response.json();
@@ -172,6 +172,3 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 });
 });
-
-
-// user_id, subject, level, group_num, update_at
