@@ -31,7 +31,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
       const utcToBst = new Date(updatedAt.replace(" ", "T"));
 
-      utcToBst.setTime(utcToBst.getTime() - 3600000);
+      utcToBst.setTime(utcToBst.getTime());
       const pad = (n) => n.toString().padStart(2, "0");
       const bst =
         `${utcToBst.getFullYear()}-${pad(utcToBst.getMonth() + 1)}-${pad(
