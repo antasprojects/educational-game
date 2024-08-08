@@ -1,3 +1,69 @@
+main > section > * {
+    width: 90%;
+    max-width: 1000px;
+    margin: 20px auto;
+    padding: 30px;
+    background: linen;
+    border-radius: 20px;
+    box-shadow:
+        8px 8px 20px rgba(0, 0, 0, 0.4),
+        inset -8px -8px 20px rgba(0, 0, 0, 0.2),
+        inset 8px 8px 20px rgba(255, 255, 255, 0.1);
+    transform: perspective(1000px) rotateX(3deg) rotateY(-3deg);
+    transition: all 0.4s ease;
+}
+
+main > section > *:hover {
+    transform: perspective(1000px) rotateX(0deg) rotateY(0deg);
+    box-shadow:
+        12px 12px 25px rgba(0, 0, 0, 0.5),
+        inset -12px -12px 25px rgba(0, 0, 0, 0.2),
+        inset 12px 12px 25px rgba(255, 255, 255, 0.1);
+}
+
+main > section h1, main > section h2 {
+    color: #5a220c;
+    text-shadow: none;
+    font-size: 2em;
+    margin-bottom: 30px;
+    text-align: center;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+    letter-spacing: 2px;
+}
+
+main > section p {
+    color: #5a220c;
+    font-size: 1.2em;
+    line-height: 1.6;
+    text-align: justify;
+    margin-bottom: 20px;
+    text-shadow: none;
+}
+
+.main-section h1,
+.main-section p {
+    font-size: 1.2em;
+    text-shadow:
+        1px 1px 0 #ddd,
+        2px 2px 0 #ccc,
+        3px 3px 0 #bbb,
+        4px 4px 0 #aaa,
+        5px 5px 0 #999,
+        6px 6px 5px rgba(0,0,0,0.5);
+    margin-bottom: 20px;
+}
+
+.main-section h1 {
+    font-size: 2em;
+}
+
+.main-section > div {
+    padding: 30px;
+    margin: 20px 0;
+    border-radius: 10px;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+}
+
 body {
     font-family: Arial, sans-serif;
     line-height: 1.6;
@@ -6,27 +72,28 @@ body {
     display: flex;
     flex-direction: column;
     min-height: 100vh;
-    background-image: url('Assets/study.jpg');
+    background: url('/educational-game/client/Assets/time.jpg') no-repeat center center fixed;
     background-size: cover;
-    background-attachment: fixed;
-    background-position: center;
+    color: white;
+    padding-bottom: 30px;
 }
 
 header {
-    background-color: rgba(76, 175, 80, 0.9);
+    width: 100%;
+    background-color: rgba(49, 18, 18, 0.8);
     color: #fff;
-    padding: 1rem;
+    padding: 2px;
     display: flex;
     justify-content: space-between;
     align-items: center;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
 }
 
 .logo {
-    font-size: 1.5rem;
+    font-size: 0.5rem;
     font-weight: bold;
-    width: 100px;
-    height: 100px;
-    background-image: url('Assets/logo.png');
+    width: 60px;
+    height: 60px;
     background-size: contain;
     background-repeat: no-repeat;
 }
@@ -51,17 +118,16 @@ main {
     flex-grow: 1;
     display: flex;
     flex-direction: column;
-    align-items: center;
-    justify-content: flex-start;
+    align-items: flex-end;
+    justify-content: center;
     padding: 2rem;
     text-align: center;
-    background-color: rgba(255, 255, 255, 0.9);
-    margin: 2rem;
-    border-radius: 10px;
+    min-height: calc(100vh - 200px);
+    padding-right: 10%;
 }
 
 h1, h2, h3, h4 {
-    color: #4CAF50;
+    color: #5a220c;
 }
 
 .hidden {
@@ -69,308 +135,214 @@ h1, h2, h3, h4 {
 }
 
 button {
-    background-color: #4CAF50;
+    background-color: #5a220c;
     color: #fff;
     border: none;
     padding: 0.5rem 1rem;
     cursor: pointer;
     margin: 0.5rem;
+    transition: background-color 0.3s ease;
 }
 
 button:hover {
-    background-color: #45a049;
-}
-
-form {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    width: 100%;
-    max-width: 300px;
-}
-
-form label {
-    margin-top: 1rem;
-}
-
-form input {
-    width: 100%;
-    padding: 0.5rem;
-    margin-top: 0.5rem;
-}
-
-.feedback {
-    color: red;
-    margin-top: 1rem;
-}
-
-footer {
-    background-color: rgba(76, 175, 80, 0.9);
-    color: #fff;
-    text-align: center;
-    padding: 1rem;
-    width: 100%;
-}
-
-#questions {
-    text-align: left;
-}
-
-.question {
-    margin-bottom: 1rem;
+    background-color: #7a3a1c;
 }
 
 .content-wrapper {
     display: flex;
-    justify-content: space-between;
-    gap: 4rem;
-    margin: 0 auto;
+    flex-direction: column;
+    align-items: center;
     max-width: 1200px;
+    margin: 0 auto;
     padding: 2rem;
-}
-
-.how-to-use {
-    flex: 1;
-    max-width: 400px;
-    text-align: left;
-    background-color: #f0f0f0;
-    padding: 2rem;
-    border-radius: 10px;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-}
-
-.how-to-use ol {
-    padding-left: 1.5rem;
 }
 
 .team {
-    flex: 1;
-    max-width: 600px;
+    width: 100%;
+    max-width: 800px;
+    background-color: cream;
+    border-radius: 10px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    margin-bottom: 2rem;
+    padding: 2rem;
+}
+
+.about-us-team-title {
+    color: #5a220c;
+    font-size: 1.8rem;
+    margin-bottom: 1rem;
+    text-align: center;
 }
 
 .developer-grid {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
-    gap: 2rem;
+    gap: 1.5rem;
 }
 
 .developer {
-    background-color: #f0f0f0;
+    background-color: #5a220c;
+    border-radius: 8px;
     padding: 1.5rem;
-    border-radius: 10px;
     text-align: center;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.developer:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
+}
+
+.about-us-developer-name,
+.about-us-developer-contact {
+    color: cream;
+    font-size: 1.2rem;
+    margin-bottom: 0.5rem;
 }
 
 .github-link {
     display: inline-block;
-    margin-top: 0.5rem;
-    padding: 0.3rem 0.7rem;
-    background-color: #4CAF50;
-    color: white;
+    padding: 0.5rem 1rem;
+    background-color: cream;
+    color: #5a220c;
     text-decoration: none;
-    border-radius: 3px;
-    transition: background-color 0.3s ease;
+    border-radius: 5px;
+    font-size: 0.9rem;
+    transition: all 0.3s ease;
 }
 
 .github-link:hover {
-    background-color: #45a049;
+    transform: translateY(-2px);
 }
 
 @media (max-width: 768px) {
+    .developer-grid {
+        grid-template-columns: 1fr;
+    }
     .content-wrapper {
         flex-direction: column;
         align-items: center;
     }
-
     .how-to-use, .team {
         max-width: 100%;
     }
-} 
-#login-container {
-    max-width: 400px;
-    margin: 2rem auto;
-    padding: 2rem;
-    background-color: rgba(255, 255, 255, 0.9);
-    border-radius: 8px;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 }
 
-#login-container h2 {
-    text-align: center;
-    margin-bottom: 1.5rem;
-    color: #4CAF50;
+html {
+    scroll-behavior: smooth;
 }
 
-.form-group {
-    margin-bottom: 1rem;
+button:focus, .github-link:focus {
+    outline: 2px solid #0366d6;
+    outline-offset: 2px;
 }
 
-.form-group label {
-    display: block;
-    margin-bottom: 0.5rem;
+.welcome-section {
+    align-self: flex-end;
+    margin-left: 10%;
+    padding-top: 10px;
+}
+
+.welcome-section > * {
+    width: 90%;
+    max-width: 1000px;
+    margin: 20px 0;
+}
+
+.welcome-title {
+    text-align: left;
+    margin-bottom: 15px;
+    font-family: 'Goudy Old Style', 'Garamond', serif;
+    color: #5a220c;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+    letter-spacing: 1px;
     font-weight: bold;
-    color: #333;
+    font-size: 2em;
+    transform: skew(-5deg);
+    margin-top: 0;
+    margin-bottom: 10px;
 }
 
-.form-group input {
-    width: 100%;
-    padding: 0.75rem;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-    font-size: 1rem;
+#welcome, #team {
+    padding-top: 0;
+    margin-top: 0;
 }
 
-.btn-primary {
-    display: block;
-    width: 100%;
-    padding: 0.75rem;
-    background-color: #4CAF50;
-    color: white;
-    border: none;
-    border-radius: 4px;
-    font-size: 1rem;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
+#nav-bar {
+    background-color: rgba(49, 18, 18, 0.8);
+    padding: 15px 0;
 }
 
-.btn-primary:hover {
-    background-color: #45a049;
-}
-
-.login-options {
+#nav-bar ul {
+    list-style-type: none;
     display: flex;
-    justify-content: space-between;
-    margin-top: 1rem;
-}
-
-.login-options a {
-    color: #4CAF50;
-    text-decoration: none;
-    font-size: 0.9rem;
-}
-
-.login-options a:hover {
-    text-decoration: underline;
-}
-
-.logo a {
-    color: #fff;
-    text-decoration: none;
-}
-
-#logout {
-    cursor: pointer;
-}
-main section {
-    width: 60%;
-    max-width: 400px;
-    margin: 30px auto;
-    padding: 20px;
-    background: linear-gradient(145deg, #4CAF50, #8BC34A);
-    border-radius: 15px;
-    box-shadow: 
-        5px 5px 10px rgba(0, 0, 0, 0.3),
-        inset -5px -5px 10px rgba(0, 0, 0, 0.1),
-        inset 5px 5px 10px rgba(255, 255, 255, 0.1);
-    transform: perspective(1000px) rotateX(5deg) rotateY(-5deg);
-    transition: all 0.3s ease;
-}
-
-main section:hover {
-    transform: perspective(1000px) rotateX(0deg) rotateY(0deg);
-    box-shadow: 
-        8px 8px 15px rgba(0, 0, 0, 0.3),
-        inset -8px -8px 15px rgba(0, 0, 0, 0.1),
-        inset 8px 8px 15px rgba(255, 255, 255, 0.1);
-}
-
-main section h2 {
-    color: #FFEB3B; /* Yellow color for headings */
-    font-size: 1.4em;
-    margin-bottom: 20px;
-    text-align: center;
-    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.3);
-}
-
-main section button {
-    display: block;
-    width: 80%;
-    margin: 15px auto;
-    padding: 10px;
-    font-size: 1em;
-    background-color: #FFEB3B; /* Yellow background for buttons */
-    color: #333;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    transition: all 0.2s ease;
-}
-
-main section button:hover {
-    background-color: #FDD835;
-    transform: translateY(-2px);
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
-}
-
-body, main {
-    background: transparent;
-}
-
-main > section {
-    background: none;
+    justify-content: center;
     padding: 0;
     margin: 0;
 }
 
-main > section > * {
-    width: 60%;
-    max-width: 400px;
-    margin: 30px auto;
-    padding: 20px;
-    background: linear-gradient(145deg, #4CAF50, #8BC34A);
-    border-radius: 15px;
-    box-shadow: 
-        5px 5px 10px rgba(0, 0, 0, 0.3),
-        inset -5px -5px 10px rgba(0, 0, 0, 0.1),
-        inset 5px 5px 10px rgba(255, 255, 255, 0.1);
-    transform: perspective(1000px) rotateX(5deg) rotateY(-5deg);
+#nav-bar li {
+    margin: 0 8px;
+}
+
+#nav-bar a {
+    color: #5a220c;
+    text-decoration: none;
+    font-size: 16px;
+    font-weight: bold;
+    font-family: 'Goudy Old Style', 'Garamond', serif;
+    text-transform: capitalize;
     transition: all 0.3s ease;
+    padding: 8px 12px;
+    background-color: linen;
+    border-radius: 7px;
+    position: relative;
+    box-shadow:
+        0 2px 0 rgba(49, 18, 18, 0.8),
+        0 3px 3px rgba(0, 0, 0, 0.1);
 }
 
-main > section > *:hover {
-    transform: perspective(1000px) rotateX(0deg) rotateY(0deg);
-    box-shadow: 
-        8px 8px 15px rgba(0, 0, 0, 0.3),
-        inset -8px -8px 15px rgba(0, 0, 0, 0.1),
-        inset 8px 8px 15px rgba(255, 255, 255, 0.1);
-}
-
-main > section h2 {
-    color: #FFEB3B;
-    font-size: 1.4em;
-    margin-bottom: 20px;
-    text-align: center;
-    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.3);
-}
-
-main > section button {
-    display: block;
-    width: 80%;
-    margin: 15px auto;
-    padding: 10px;
-    font-size: 1em;
-    background-color: #FFEB3B;
-    color: #333;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    transition: all 0.2s ease;
-}
-
-main > section button:hover {
-    background-color: #FDD835;
+#nav-bar a:hover {
     transform: translateY(-2px);
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+    box-shadow:
+        0 4px 0 rgba(49, 18, 18, 0.8),
+        0 5px 5px rgba(0, 0, 0, 0.1);
 }
 
+#nav-bar a:active {
+    transform: translateY(1px);
+    box-shadow:
+        0 1px 0 rgba(49, 18, 18, 0.8),
+        0 2px 2px rgba(0, 0, 0, 0.1);
+}
+
+footer {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    background-color: #5a220c;
+    text-align: center;
+    padding: 3px 0;
+}
+
+.how-to-use h3, .how-to-use p, .how-to-use ol {
+    font-family: 'Goudy Old Style', 'Garamond', serif;
+}
+
+.how-to-use h3 {
+    color: #5a220c;
+    font-size: 1.5em;
+    margin-top: 20px;
+    margin-bottom: 10px;
+    text-shadow: none;
+    font-weight: bold;
+}
+
+.how-to-use p, .how-to-use ol {
+    color: #5a220c;
+    font-size: 1.1em;
+    line-height: 1.6;
+    text-shadow: none;
+    font-weight: normal;
+}
