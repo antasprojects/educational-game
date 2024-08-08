@@ -32,6 +32,8 @@ class Result {
         const levelLower = level.toLowerCase();
         const thirtySecInterval = addSecondsToTime(updatedAt, 30);
         console.log("DONE here")
+        console.log(updatedAt);
+        console.log(thirtySecInterval);
         const response = await db.query(`SELECT r.user_id,
                                                qb.subject, 
                                                qb.level, 
