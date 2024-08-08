@@ -91,7 +91,6 @@ document.addEventListener('DOMContentLoaded', () => {
     console.log('Quiz submitted');
     // You can add code here to process the answers and show results
     
-   
     document.querySelectorAll('.question').forEach(questionDiv => {
         const answers = {};
         const questionId = questionDiv.querySelector('input[type="radio"]').name.split('_')[1];
@@ -99,14 +98,15 @@ document.addEventListener('DOMContentLoaded', () => {
         if (selectedOption) {
             answers[questionId] = selectedOption.value;
         }
-         checkAnswer(answers)  
+         score = checkAnswer(answers);
+
     });
     function checkAnswer(answers){
-        rightAnswers.forEach(rightAnswer=> {
-            if(rightAnswer === answers[questionId]){
-                score ++
-            }
-        })
+        const objectValues = Object.values(answers)
+        const score = rightAnswers.reduce((count, element) => {
+            return objectValues.includes(element) ? count + 1 : count;
+        }, 0);
+        return score;
     }
 });
 });
