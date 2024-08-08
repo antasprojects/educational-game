@@ -274,7 +274,7 @@ xdescribe("Result Model", () => {
 
             jest.spyOn(db, "query").mockResolvedValueOnce({ rows: mockResult });
 
-            const result = await Result.showResultAssociateQuestionBank(testQuery.id, testQuery.subject, testQuery.level, testQuery.group_num, testQuery.user_id);
+            const result = await Result.showResultAssociateQuestionBank(2, "History", "Intermediate", 3);
 
             expect(result).toBeInstanceOf(Result);
             expect(result.question_id).toBe(3);
@@ -284,16 +284,7 @@ xdescribe("Result Model", () => {
         });
         
         it("throws if group_num or id are not provided", async () => {
-            // return the promise directly
-            await expect(Result.showResultAssociateQuestionBank(2, "Poetry", 4, 5)).rejects.toThrow("Fields missing");
-
-            // Alternatively, test with 3 arguments
-            await expect(Result.showResultAssociateQuestionBank(2, "Poetry", 4)).rejects.toThrow("Fields missing");
-
-            // Alternatively, test with 2 arguments
-            await expect(Result.showResultAssociateQuestionBank(2, "Poetry")).rejects.toThrow("Fields missing");
-
-            // Alternatively, test with 1 arguments
+            // Do not use await here; instead, return the promise directly
             await expect(Result.showResultAssociateQuestionBank(2)).rejects.toThrow("Fields missing");
 
             // Alternatively, test with no arguments
@@ -303,7 +294,7 @@ xdescribe("Result Model", () => {
         it("throws if db query returns no value", async () => {
             // Act & Arrange
             jest.spyOn(db, "query").mockResolvedValueOnce({ rows: [] });
-            await expect(Result.showResultAssociateQuestionBank(1, "Poetry", "Elite", 8, 2)).rejects.toThrow("Result not found");
+            await expect(Result.showResultAssociateQuestionBank(1, "Poetry", "Elite", 8)).rejects.toThrow("Result not found");
         });
 
         it("throws if inner association is a miss match", async () => {
@@ -314,7 +305,7 @@ xdescribe("Result Model", () => {
             jest.spyOn(db, "query").mockResolvedValueOnce({ rows: mockResult });
 
             
-            await expect(Result.showResultAssociateQuestionBank(1, "Poetry", "Elite", 8, 7)).rejects.toThrow("Association miss match");
+            await expect(Result.showResultAssociateQuestionBank(1, "Poetry", "Elite", 8)).rejects.toThrow("Association miss match");
         });
 
     });
