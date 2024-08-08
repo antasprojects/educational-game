@@ -298,7 +298,6 @@ button:focus, .github-link:focus {
 }
 
 #nav-bar {
-    background-color: rgba(49, 18, 18, 0.8);
     padding: 15px 0;
 }
 
@@ -384,3 +383,32 @@ footer {
 .content-wrapper {
     box-shadow: 2px 10px 10px rgba(83, 42, 13, 0.5); /* Brown shadow */
 }
+
+.subject-btn,
+.level-btn,
+.quiz-btn {
+    color: #5a220c;
+    font-family: 'Goudy Old Style', 'Garamond', serif;
+    font-size: 1.2em;
+    font-weight: bold;
+    padding: 10px 20px;
+    text-transform: capitalize;
+    margin: 10px;
+    box-sizing: border-box;
+}
+
+#quizzes h2,
+#quiz-level h2,
+#quiz-selection h2 {
+    margin-left: -12px; /* Adjust this value as needed */
+}
+
+label {
+    color: #5a220c;
+  }
+
+  #submitquiz,
+  #retryQuiz {
+    color: #5a220c;
+  }
+
