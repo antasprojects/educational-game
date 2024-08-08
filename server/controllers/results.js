@@ -72,6 +72,7 @@ async function totalScore(req, res) {
         const updatedAt = req.query.updated_at;
         console.log("second", req.query)
         const result = await Result.showTotalUserScore(userId, subject, level, groupNum, updatedAt);
+        console.log("third");
         res.status(200).json({ data: result })
     } catch (error) {
         res.status(404).json({ error: error.message });
