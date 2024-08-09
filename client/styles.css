@@ -275,7 +275,7 @@ button:focus, .github-link:focus {
 .welcome-section > * {
     width: 90%;
     max-width: 1000px;
-    margin: 20px 0;
+    margin: -250px 0;
 }
 
 .welcome-title {
