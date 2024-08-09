@@ -4,9 +4,11 @@
 
 1. [Summary](#summary)
 2. [Technology Used](#technology-used)
-3. [Installation](#installation)
-4. [Database](#docker)
-5. [Remaining Bugs](#remaining-bugs)
+3. [Usage](#usage)
+4. [Database](#database)
+5. [Contributing](#contributing)
+6. [License](#license)
+7. [Contact Us](#contact-us)
 
 ## Summary
 
@@ -104,7 +106,7 @@ We welcome contributions from the community! If you'd like to contribute, please
 
 This project is licensed under the MIT License. See the LICENSE file for details.
 
-## Contact
+## Contact Us
 
 For any questions or feedback, please contact any of these collaborators: 
 
