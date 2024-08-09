@@ -14,8 +14,11 @@ document.addEventListener('DOMContentLoaded', () => {
     let selectedSubject = '';
     let selectedLevel = '';
     let selectedQuiz = '';
-    let rightAnswers = []
+    let rightAnswers = [];
+    let resultsData;
     let score = 0
+    const correctAnswersHelper = [];
+    const selectedHelper = [];
     const token = localStorage.getItem('token')
     const decodedToken = jwt_decode(token);
     console.log(decodedToken);
@@ -33,6 +36,7 @@ document.addEventListener('DOMContentLoaded', () => {
     subjectButtons.forEach(button => {
         button.addEventListener('click', () => {
             selectedSubject = button.dataset.subject;
+            console.log("dataset subject", button);
             showSection('quiz-level');
         });
     });
@@ -52,6 +56,9 @@ document.addEventListener('DOMContentLoaded', () => {
     });
     async function fetchQuizData(selectedSubject, selectedLevel, selectedQuiz) {
         try {
+            localStorage.setItem("subject", selectedSubject);
+            localStorage.setItem("level", selectedLevel);
+            localStorage.setItem("quizGroup", selectedQuiz);
             const respData = await fetch(`https://educational-game-api.onrender.com/questions/quizdata/${selectedQuiz}?subject=${selectedSubject}&level=${selectedLevel}`);
            if (respData.ok) {
                 const data = await respData.json();
@@ -65,6 +72,13 @@ document.addEventListener('DOMContentLoaded', () => {
     }
     
     function loadQuiz(datas) {
+        datas.map(data => {
+            correctAnswersHelper.push({
+                question_id: data.id,
+                answer: data.answer
+            })
+        });
+        console.log("helper", correctAnswersHelper);
         quizSectionDiv.innerHTML = '';
         showSection('quiz');
         datas.forEach(data => {
@@ -96,22 +110,65 @@ document.addEventListener('DOMContentLoaded', () => {
     console.log('Quiz submitted');
     // You can add code here to process the answers and show results
     
-    document.querySelectorAll('.question').forEach(questionDiv => {
+    document.querySelectorAll('.question').forEach((questionDiv, i) => {
         const answers = {};
         const questionId = questionDiv.querySelector('input[type="radio"]').name.split('_')[1];
         const selectedOption = questionDiv.querySelector('input[type="radio"]:checked');
-        if (selectedOption) {
-            answers[questionId] = selectedOption.value;
-        }
-         score = checkAnswer(answers);
-
+        console.log("selectOption " + String(i) + ".", selectedOption.value);
+        console.log("question", questionId)
+        selectedHelper.push({
+            question_id: questionId,
+            answer: selectedOption.value
+        });
+        console.log("selectedDone", selectedHelper);
+        updateResult();
+        
     });
-    function checkAnswer(answers){
-        const objectValues = Object.values(answers)
-        const score = rightAnswers.reduce((count, element) => {
-            return objectValues.includes(element) ? count + 1 : count;
-        }, 0);
-        return score;
+    async function updateResult() {
+        try {
+
+            const scores = correctAnswersHelper.map((data, index) => {
+                return {
+                    question_id: data.question_id,
+                    user_id: decodedToken.id,
+                    score: data.answer === selectedHelper[index].answer ? 1 : 0
+                }
+            });
+
+            console.log("SCORES", scores);
+
+            resultsData = await Promise.all(scores.map(async data => {
+                const body = {
+                    question_id: data.question_id,
+                    score: data.score,
+                    user_id: data.user_id
+                }
+
+                const option = {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json"
+                    },
+                    body: JSON.stringify(body),
+
+                }
+                const response = await fetch(`https://educational-game-api.onrender.com/results`, option);
+
+                if (response.ok) {
+                    const res = await response.json();
+                    console.log(res);
+                    return res.data;
+                }
+            }));
+
+            localStorage.setItem("resultUpdate", resultsData[0].updated_at);
+            localStorage.setItem("maxScore", String(resultsData.length));
+
+            window.location.assign(window.location.origin + "/results.html");
+
+        } catch (error) {
+            console.log('Error updating results:', error);
+        }
     }
 });
 });

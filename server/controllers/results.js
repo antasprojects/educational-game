@@ -30,7 +30,9 @@ async function show(req, res) {
 async function create(req, res) {
     try {
         const data = req.body;
+        console.log("first", data)
         const newResult = await Result.create(data);
+        console.log("DONE", newResult);
         res.status(201).json({ data: newResult });
     } catch (error) {
         res.status(400).json({ error: error.message });
@@ -60,12 +62,28 @@ async function destroy(req, res) {
     }
 }
 
-
+async function totalScore(req, res) {
+    try { // user_id, subject, level, group_num, update_at
+        console.log("first")
+        const userId = parseInt(req.params.user_id);
+        const subject = req.query.subject;
+        const level = req.query.level;
+        const groupNum = req.query.group_num;
+        const updatedAt = req.query.updated_at;
+        console.log("second", req.query)
+        const result = await Result.showTotalUserScore(userId, subject, level, groupNum, updatedAt);
+        console.log("third");
+        res.status(200).json({ data: result })
+    } catch (error) {
+        res.status(404).json({ error: error.message });
+    }
+}
 
 module.exports = {
     index,
     show,
     create,
     update,
-    destroy
+    destroy,
+    totalScore
 }

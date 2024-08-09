@@ -28,9 +28,9 @@ static async getAll(){
 }
 static async getOneBySubjectLevelGroup(subject, level, group_num){
     try{
-        const subjectNew = subject.charAt(0).toUpperCase()+subject.slice(1);
-        const levelNew = level.charAt(0).toUpperCase()+level.slice(1);
-        const response = await db.query("SELECT id, question, option_1, option_2, option_3, option_4, answer FROM question_bank WHERE subject = $1 AND level = $2 AND group_num = $3;",[subjectNew, levelNew, group_num])
+        const subjectNew = subject.toLowerCase();
+        const levelNew = level.toLowerCase();
+        const response = await db.query("SELECT id, question, option_1, option_2, option_3, option_4, answer FROM question_bank WHERE LOWER(subject) = $1 AND LOWER(level) = $2 AND group_num = $3;",[subjectNew, levelNew, group_num])
         
         if(response.rows.length === 0){
             throw new Error("No Questions in that group")
